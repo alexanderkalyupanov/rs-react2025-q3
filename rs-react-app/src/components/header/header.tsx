@@ -3,7 +3,7 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <header className="flex px-7 py-7 justify-between">
+      <header className="flex px-7 py-7 justify-between gap-2">
         <h1 className="text-2xl md:text-4xl lg:text-5xl font-light text-center align-center">
           Rick & Morty
         </h1>

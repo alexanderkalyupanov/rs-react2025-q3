@@ -25,7 +25,7 @@ class SearchComponent extends React.Component<SearchState> {
     return (
       <div className="flex items-center">
         <form
-          className="flex flex-col sm:flex-row gap-2 w-full"
+          className="flex flex-col flex-row gap-2 w-full sm:pl-5"
           onSubmit={this.handleSubmit}
         >
           <input
@@ -34,12 +34,12 @@ class SearchComponent extends React.Component<SearchState> {
             onChange={this.handleInputChange}
             placeholder="Search..."
             className="border-5px-solid bg-white-300 border-2 border-solid border-purple-400 p-2 color-neutral-100 mr-4       w-full
-              sm:w-60
-              md:w-80 text-gray-100  focus:outline-none"
+              sm:w-45
+              md:w-60 lg:w-80 text-gray-100  focus:outline-none"
           />
           <button
             type="submit"
-            className="bg-purple-300 p-2 rounded w-25 cursor-pointer whitespace-nowrap"
+            className="bg-purple-300 p-2 rounded w-25 cursor-pointer whitespace-nowrap sm:w-40 "
           >
             Search
           </button>

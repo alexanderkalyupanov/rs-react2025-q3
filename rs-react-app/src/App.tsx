@@ -55,14 +55,8 @@ class App extends React.Component {
 
     if (loading) {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="border rounded-lg p-4 animate-pulse">
-              <div className="bg-gray-200 h-48 rounded mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            </div>
-          ))}
+        <div className="flex justify-center items-center h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500" />
         </div>
       );
     }
@@ -78,7 +72,7 @@ class App extends React.Component {
     }
 
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-5 py-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 px-5 py-10 place-items-center">
         {characters.map((character) => (
           <CardItem key={character.id} character={character} />
         ))}
@@ -90,7 +84,7 @@ class App extends React.Component {
     return (
       <div className="bg-violet-600">
         <header className="flex px-7 py-7 justify-between">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-light text-center align-center">
+          <h1 className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
             Rick & Morty
           </h1>
           <SearchComponent
