@@ -2,24 +2,32 @@ import React from 'react';
 
 interface SearchState {
   searchQuery: string;
+  loading: boolean;
+  onSearch: (query: string) => void;
 }
 
-class Search extends React.Component<object, SearchState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      searchQuery: '',
-    };
-  }
+class SearchComponent extends React.Component<SearchState> {
+  state = {
+    searchQuery: this.props.searchQuery || '',
+  };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchQuery: e.target.value });
   };
 
+  handleSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    const queryTrimmed = this.state.searchQuery.trim();
+    this.props.onSearch(queryTrimmed);
+  };
+
   render() {
     return (
       <div className="flex items-center">
-        <form className="flex flex-col sm:flex-row gap-2 w-full">
+        <form
+          className="flex flex-col sm:flex-row gap-2 w-full"
+          onSubmit={this.handleSubmit}
+        >
           <input
             type="text"
             value={this.state.searchQuery}
@@ -41,4 +49,4 @@ class Search extends React.Component<object, SearchState> {
   }
 }
 
-export default Search;
+export default SearchComponent;
