@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Character } from '../cardItem/cardItem';
+import type { Character } from '../cardItem/CardItem';
 import CardList from '../cardList/CardList';
 
 interface MainProps {

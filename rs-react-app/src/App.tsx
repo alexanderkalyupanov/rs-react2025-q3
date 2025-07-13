@@ -1,6 +1,6 @@
 import './style.css';
 import React from 'react';
-import type { Character } from './components/cardItem/cardItem';
+import type { Character } from './components/cardItem/CardItem';
 import ErrorBoundary from './components/errorBoundary/errorBoundary';
 import Main from './components/main/main';
 import Header from './components/header/header';
@@ -35,25 +35,44 @@ class App extends React.Component {
           : `https://rickandmortyapi.com/api/character`
       );
       if (!response.ok) {
-        throw new Error(`HTTP Error! Status: ${response.status}`);
+        const errorData = await response.json().catch(() => null);
+        let errorMessage = `Error ${response.status}: `;
+
+        switch (response.status) {
+          case 404:
+            errorMessage += 'Characters not found';
+            break;
+          case 400:
+            errorMessage += 'Invalid request';
+            break;
+          case 500:
+            errorMessage += 'Server error';
+            break;
+          default:
+            errorMessage += errorData?.error || 'Failed to fetch characters';
+        }
+        throw new Error(errorMessage);
       }
+
       const data = await response.json();
-      console.log(data);
       this.setState({ characters: data.results || [] });
-    } catch {
-      this.setState({ error: 'Error', characters: [] });
+    } catch (error) {
+      this.setState({
+        error: error instanceof Error ? error.message : 'Unknown error...',
+        characters: [],
+      });
     } finally {
       this.setState({ loading: false });
     }
   };
 
-  handleSearch = (query: string) => {
+  handleSearch = (query: string): void => {
     localStorage.setItem('lastSearch', query);
     this.setState({ lastSearch: query });
     this.fetchData(query);
   };
 
-  triggerError = () => {
+  triggerError = (): void => {
     this.setState({ shouldThrow: true });
   };
 

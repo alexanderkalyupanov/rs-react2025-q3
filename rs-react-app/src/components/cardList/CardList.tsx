@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Character } from '../cardItem/cardItem';
-import CardItem from '../cardItem/cardItem';
+import type { Character } from '../cardItem/CardItem';
+import CardItem from '../cardItem/CardItem';
 
 interface ResultsProps {
   characters: Character[];

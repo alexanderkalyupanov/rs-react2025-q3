@@ -11,7 +11,7 @@ class SearchComponent extends React.Component<SearchState> {
     searchQuery: this.props.searchQuery || '',
   };
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ searchQuery: e.target.value });
   };
 
