@@ -1,0 +1,9 @@
+[build]
+  base = "rs-react2025-q3/rs-react-app"
+  command = "cd rs-react2025-q3/rs-react-app && npm install && npm run build"
+  publish = "rs-react2025-q3/rs-react-app/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
