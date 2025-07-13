@@ -1,14 +1,16 @@
 import './style.css';
 import React from 'react';
 import type { Character } from './components/cardItem/cardItem';
-import CardItem from './components/cardItem/cardItem';
-import SearchComponent from './components/Search/Search';
+import ErrorBoundary from './components/errorBoundary/errorBoundary';
+import Main from './components/main/main';
+import Header from './components/header/header';
 
 interface AppState {
   characters: Array<Character>;
   loading: boolean;
   error: string | null;
   lastSearch: string;
+  shouldThrow: boolean;
 }
 class App extends React.Component {
   state: AppState = {
@@ -16,6 +18,7 @@ class App extends React.Component {
     loading: false,
     error: null,
     lastSearch: localStorage.getItem('lastSearch') || '',
+    shouldThrow: false,
   };
 
   componentDidMount(): void {
@@ -50,52 +53,41 @@ class App extends React.Component {
     this.fetchData(query);
   };
 
-  renderContent() {
-    const { characters, loading, error } = this.state;
-
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500" />
-        </div>
-      );
-    }
-
-    if (error) {
-      return <div className="text-center text-red-500 p-4">{error}</div>;
-    }
-
-    if (characters.length === 0) {
-      return (
-        <div className="text-red-500 text-center p-4">No characters found</div>
-      );
-    }
-
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 px-5 py-10 place-items-center">
-        {characters.map((character) => (
-          <CardItem key={character.id} character={character} />
-        ))}
-      </div>
-    );
-  }
+  triggerError = () => {
+    this.setState({ shouldThrow: true });
+  };
 
   render() {
     return (
-      <div className="bg-violet-600">
-        <header className="flex px-7 py-7 justify-between">
-          <h1 className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
-            Rick & Morty
-          </h1>
-          <SearchComponent
-            onSearch={this.handleSearch}
-            searchQuery={this.state.lastSearch}
+      <ErrorBoundary
+        fallback={
+          <div className="fixed inset-0 bg-red-500 flex flex-col items-center justify-center p-4 text-white">
+            <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
+            <p className="mb-6 text-center">Please try again later</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-white text-red-500 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors cursor-pointer"
+            >
+              Reload Page
+            </button>
+          </div>
+        }
+      >
+        <div className="bg-violet-600">
+          <Header
             loading={this.state.loading}
-          ></SearchComponent>
-        </header>
-
-        <main>{this.renderContent()}</main>
-      </div>
+            searchQuery={this.state.lastSearch}
+            onSearch={this.handleSearch}
+          ></Header>
+          <Main
+            characters={this.state.characters}
+            error={this.state.error}
+            loading={this.state.loading}
+            shouldThrow={this.state.shouldThrow}
+            onTriggerError={this.triggerError}
+          ></Main>
+        </div>
+      </ErrorBoundary>
     );
   }
 }

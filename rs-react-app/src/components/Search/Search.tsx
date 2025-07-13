@@ -39,7 +39,7 @@ class SearchComponent extends React.Component<SearchState> {
           />
           <button
             type="submit"
-            className="bg-purple-300 p-2 rounded w-25 cursor-pointer whitespace-nowrap sm:w-40 "
+            className="bg-purple-300 p-2 rounded w-25 cursor-pointer hover:bg-purple-500 transition-colors whitespace-nowrap sm:w-40 "
           >
             Search
           </button>
