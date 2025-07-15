@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix . ",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
-    "prepare": "cd .. && husky rs-react-app/.husky"
+    "prepare": "cd .. && husky rs-react2025-q3/.husky"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
