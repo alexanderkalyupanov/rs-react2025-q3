@@ -23,7 +23,10 @@ class CardItem extends React.Component<CardItemProps> {
   render() {
     const { character } = this.props;
     return (
-      <div className="item flex flex-col justify-center items-start w-90 border-3 border-solid border-purple-500 rounded-3xl pb-4 mb-5 bg-purple-500">
+      <div
+        className="item flex flex-col justify-center items-start w-90 border-3 border-solid border-purple-500 rounded-3xl pb-4 mb-5 bg-purple-500"
+        data-testid="character-card"
+      >
         <img
           src={character.image}
           alt={character.name}

@@ -31,6 +31,18 @@ describe('Search Component', () => {
   });
 
   describe('rendering', () => {
+    it('render search component', () => {
+      expect(
+        render(
+          <SearchComponent
+            loading={false}
+            searchQuery=""
+            onSearch={mockOnSearch}
+          ></SearchComponent>
+        )
+      );
+    });
+
     it('render search input and button', () => {
       render(
         <SearchComponent
@@ -100,5 +112,44 @@ describe('Search Component', () => {
       fireEvent.click(button);
       expect(mockOnSearch).toHaveBeenCalledWith('new query');
     });
+  });
+
+  it('saving query in localstorage', () => {
+    render(
+      <SearchComponent
+        loading={false}
+        searchQuery=""
+        onSearch={mockOnSearch}
+      ></SearchComponent>
+    );
+    const input = screen.getByPlaceholderText('Search...');
+    const button = screen.getByRole('button', { name: /search/i });
+    fireEvent.change(input, { target: { value: 'собаки' } });
+    fireEvent.click(button);
+    expect(localStorage.getItem('searchQuery')).toBe('собаки');
+    expect(mockOnSearch).toHaveBeenCalledWith('собаки');
+  });
+
+  it('rewriting query in localstorage', () => {
+    render(
+      <SearchComponent
+        loading={false}
+        searchQuery="собаки"
+        onSearch={mockOnSearch}
+      ></SearchComponent>
+    );
+    const input = screen.getByPlaceholderText('Search...');
+    const button = screen.getByRole('button', { name: /search/i });
+    fireEvent.change(input, { target: { value: 'птицы' } });
+    fireEvent.click(button);
+    expect(localStorage.getItem('searchQuery')).toBe('птицы');
+    expect(mockOnSearch).toHaveBeenCalledWith('птицы');
+  });
+
+  it('should disable button when loading', () => {
+    render(
+      <SearchComponent loading={true} searchQuery="" onSearch={mockOnSearch} />
+    );
+    expect(screen.getByRole('button')).not.toBeDisabled();
   });
 });
