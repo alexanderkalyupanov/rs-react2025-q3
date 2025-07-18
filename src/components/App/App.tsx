@@ -1,10 +1,9 @@
-import './style.css';
 import React from 'react';
-import type { Character } from './components/cardItem/CardItem';
-import ErrorBoundary from './components/errorBoundary/errorBoundary';
-import Main from './components/main/main';
-import Header from './components/header/header';
-import { fetchCharacters } from './services/service';
+import type { Character } from '../cardItem/CardItem';
+import ErrorBoundary from '../errorBoundary/errorBoundary';
+import Main from '../main/main';
+import Header from '../header/header';
+import { fetchCharacters } from '../../services/service';
 
 interface AppState {
   characters: Array<Character>;
@@ -51,20 +50,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <ErrorBoundary
-        fallback={
-          <div className="fixed inset-0 bg-red-500 flex flex-col items-center justify-center p-4 text-white">
-            <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
-            <p className="mb-6 text-center">Please try again later</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="bg-white text-red-500 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors cursor-pointer"
-            >
-              Reload Page
-            </button>
-          </div>
-        }
-      >
+      <ErrorBoundary>
         <div className="bg-violet-600">
           <Header
             loading={this.state.loading}
