@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import CardList from './CardList';
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import type { Character } from '../cardItem/CardItem';
 import '@testing-library/jest-dom';
 
@@ -83,8 +83,20 @@ describe('CardList Component', () => {
           shouldThrow={false}
         ></CardList>
       );
-      expect(screen.getByTestId('loading')).toBeInTheDocument();
+      expect(screen.getByTestId('loading-box')).toBeInTheDocument();
       expect(screen.getByTestId('loading')).toHaveClass('animate-spin');
+    });
+    test('unshow loading spinner', () => {
+      render(
+        <CardList
+          characters={[]}
+          loading={false}
+          error={null}
+          shouldThrow={false}
+        ></CardList>
+      );
+      expect(screen.queryByTestId('loading-box')).toBeNull();
+      expect(screen.queryByTestId('loading')).toBeNull();
     });
   });
 
@@ -142,6 +154,24 @@ describe('CardList Component', () => {
       );
       expect(screen.getByText(errorMessage)).toBeInTheDocument();
       expect(screen.getByText(errorMessage)).toHaveClass('text-red-500');
+    });
+  });
+
+  describe('Error boundary trigger', () => {
+    test('throws error when shouldThrow is true', () => {
+      const originalError = console.error;
+      console.error = vi.fn();
+      expect(() =>
+        render(
+          <CardList
+            characters={mockCharacters}
+            loading={false}
+            error={null}
+            shouldThrow={true}
+          />
+        )
+      ).toThrow('Test error triggered by button');
+      console.error = originalError;
     });
   });
 });
