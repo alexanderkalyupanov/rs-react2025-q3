@@ -18,6 +18,7 @@ class SearchComponent extends React.Component<SearchState> {
   handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     const queryTrimmed = this.state.searchQuery.trim();
+    localStorage.setItem('searchQuery', queryTrimmed);
     this.props.onSearch(queryTrimmed);
   };
 
