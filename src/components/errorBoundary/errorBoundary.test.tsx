@@ -7,7 +7,7 @@ import App from '../App/App';
 vi.mock('../cardList/CardList', () => ({
   __esModule: true,
   default: ({ shouldThrow }: { shouldThrow: boolean }) => {
-    if (shouldThrow) throw new Error('💥 CardList Error!');
+    if (shouldThrow) throw new Error('CardList Error!');
     return <div>Mock CardList</div>;
   },
 }));

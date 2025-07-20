@@ -2,44 +2,9 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CardItem from './CardItem';
 import { describe, test, expect } from 'vitest';
-import type { Character } from './CardItem';
+import { emptyCharacter, mockCharacter } from '../../tests/mockData';
 
 describe('CardItem tests', () => {
-  const mockCharacter: Character = {
-    id: 1,
-    name: 'Rick Sanchez',
-    status: 'Alive',
-    species: 'Human',
-    type: '',
-    gender: 'Male',
-    image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-    origin: {
-      name: 'Earth',
-      url: 'https://rickandmortyapi.com/api/location/1',
-    },
-    location: {
-      name: 'Earth',
-      url: 'https://rickandmortyapi.com/api/location/20',
-    },
-    episode: ['https://rickandmortyapi.com/api/episode/1'],
-    url: 'https://rickandmortyapi.com/api/character/1',
-    created: '2017-11-04T18:48:46.250Z',
-  };
-  const emptyCharacter: Character = {
-    id: 2,
-    name: '',
-    status: '',
-    species: '',
-    type: '',
-    gender: '',
-    image: '',
-    origin: { name: '', url: '' },
-    location: { name: '', url: '' },
-    episode: [],
-    url: '',
-    created: '',
-  };
-
   test('render name and description character', () => {
     render(<CardItem character={mockCharacter}></CardItem>);
     const card = screen.getByTestId('character-card');
