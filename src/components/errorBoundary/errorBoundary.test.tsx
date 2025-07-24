@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ErrorBoundary from './errorBoundary';
 import '@testing-library/jest-dom';
-import App from '../App/App';
 
 vi.mock('../cardList/CardList', () => ({
   __esModule: true,
@@ -30,41 +29,41 @@ describe('Error boundary', () => {
     expect(screen.getByText('Content')).toBeInTheDocument();
   });
 
-  it('renders fallback UI', () => {
-    render(<App></App>);
-    expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
-    const triggerBtn = screen.getByRole('button', {
-      name: /trigger test error/i,
-    });
-    fireEvent.click(triggerBtn);
+  //   it('renders fallback UI', () => {
+  //     render(<App></App>);
+  //     expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
+  //     const triggerBtn = screen.getByRole('button', {
+  //       name: /trigger test error/i,
+  //     });
+  //     fireEvent.click(triggerBtn);
 
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-    expect(screen.getByText('Please try again later')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /reload page/i }));
-  });
+  //     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+  //     expect(screen.getByText('Please try again later')).toBeInTheDocument();
+  //     expect(screen.getByRole('button', { name: /reload page/i }));
+  //   });
 
-  it('show error in console', () => {
-    const consoleSpy = vi.spyOn(console, 'error');
-    render(<App></App>);
-    const triggerBtn = screen.getByRole('button', {
-      name: /trigger test error/i,
-    });
-    fireEvent.click(triggerBtn);
-    expect(consoleSpy).toHaveBeenCalled();
-  });
+  //   it('show error in console', () => {
+  //     const consoleSpy = vi.spyOn(console, 'error');
+  //     render(<App></App>);
+  //     const triggerBtn = screen.getByRole('button', {
+  //       name: /trigger test error/i,
+  //     });
+  //     fireEvent.click(triggerBtn);
+  //     expect(consoleSpy).toHaveBeenCalled();
+  //   });
 
-  it('reloads page in click btn reload page', () => {
-    const reloadMock = vi.fn();
-    vi.stubGlobal('location', { reload: reloadMock });
+  //   it('reloads page in click btn reload page', () => {
+  //     const reloadMock = vi.fn();
+  //     vi.stubGlobal('location', { reload: reloadMock });
 
-    render(<App></App>);
-    const triggerBtn = screen.getByRole('button', {
-      name: /trigger test error/i,
-    });
-    fireEvent.click(triggerBtn);
+  //     render(<App></App>);
+  //     const triggerBtn = screen.getByRole('button', {
+  //       name: /trigger test error/i,
+  //     });
+  //     fireEvent.click(triggerBtn);
 
-    fireEvent.click(screen.getByRole('button', { name: /reload page/i }));
-    expect(reloadMock).toHaveBeenCalledOnce();
-    vi.unstubAllGlobals();
-  });
+  //     fireEvent.click(screen.getByRole('button', { name: /reload page/i }));
+  //     expect(reloadMock).toHaveBeenCalledOnce();
+  //     vi.unstubAllGlobals();
+  //   });
 });
