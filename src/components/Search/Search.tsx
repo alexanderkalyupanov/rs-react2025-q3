@@ -1,53 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-interface SearchState {
+interface SearchProps {
   searchQuery: string;
-  loading: boolean;
   onSearch: (query: string) => void;
+  isLoading: boolean;
 }
 
-class SearchComponent extends React.Component<SearchState> {
-  state = {
-    searchQuery: this.props.searchQuery || '',
-  };
+function SearchComponent({ searchQuery = '', onSearch }: SearchProps) {
+  const [query, setQuery] = useState(searchQuery);
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ searchQuery: e.target.value });
-  };
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setQuery(e.target.value);
+  }
 
-  handleSubmit = (e: React.FormEvent): void => {
+  function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    const queryTrimmed = this.state.searchQuery.trim();
+    const queryTrimmed = query.trim();
     localStorage.setItem('searchQuery', queryTrimmed);
-    this.props.onSearch(queryTrimmed);
-  };
+    onSearch(queryTrimmed);
+  }
 
-  render() {
-    return (
-      <div className="flex items-center">
-        <form
-          className="flex flex-col flex-row gap-2 w-full sm:pl-5"
-          onSubmit={this.handleSubmit}
-        >
-          <input
-            type="text"
-            value={this.state.searchQuery}
-            onChange={this.handleInputChange}
-            placeholder="Search..."
-            className="border-5px-solid bg-white-300 border-2 border-solid border-purple-400 p-2 color-neutral-100 mr-4       w-full
+  return (
+    <div className="flex items-center">
+      <form
+        className="flex flex-col flex-row gap-2 w-full sm:pl-5"
+        onSubmit={handleSubmit}
+      >
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Search..."
+          className="border-5px-solid bg-white-300 border-2 border-solid border-purple-400 p-2 color-neutral-100 mr-4       w-full
               sm:w-45
               md:w-60 lg:w-80 text-gray-100  focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="bg-purple-300 p-2 rounded w-25 cursor-pointer hover:bg-purple-500 transition-colors whitespace-nowrap sm:w-40 "
-          >
-            Search
-          </button>
-        </form>
-      </div>
-    );
-  }
+        />
+        <button
+          type="submit"
+          className="bg-purple-300 p-2 rounded w-25 cursor-pointer hover:bg-purple-500 transition-colors whitespace-nowrap sm:w-40 "
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  );
 }
 
 export default SearchComponent;

@@ -10,7 +10,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={mockCharacters}
-          loading={false}
+          isLoading={false}
           error={null}
           shouldThrow={false}
         ></CardList>
@@ -23,7 +23,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={[]}
-          loading={false}
+          isLoading={false}
           error={null}
           shouldThrow={false}
         ></CardList>
@@ -35,7 +35,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={[]}
-          loading={true}
+          isLoading={true}
           error={null}
           shouldThrow={false}
         ></CardList>
@@ -47,7 +47,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={[]}
-          loading={false}
+          isLoading={false}
           error={null}
           shouldThrow={false}
         ></CardList>
@@ -62,7 +62,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={mockCharacters}
-          loading={false}
+          isLoading={false}
           error={null}
           shouldThrow={false}
         ></CardList>
@@ -89,7 +89,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={[misCharacter]}
-          loading={false}
+          isLoading={false}
           error={null}
           shouldThrow={false}
         ></CardList>
@@ -104,7 +104,7 @@ describe('CardList Component', () => {
       render(
         <CardList
           characters={[]}
-          loading={false}
+          isLoading={false}
           error={errorMessage}
           shouldThrow={false}
         ></CardList>
@@ -122,7 +122,7 @@ describe('CardList Component', () => {
         render(
           <CardList
             characters={mockCharacters}
-            loading={false}
+            isLoading={false}
             error={null}
             shouldThrow={true}
           />
