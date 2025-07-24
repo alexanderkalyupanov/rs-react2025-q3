@@ -23,7 +23,7 @@ function App() {
   const [lastSearch, setLastSearch] = useState(
     localStorage.getItem('lastSearch') || ''
   );
-  // const [shouldThrow, setShouldThrow] = useState(false);
+  const [shouldThrow, setShouldThrow] = useState(false);
 
   useEffect(() => {
     fetchData(lastSearch);
@@ -51,9 +51,9 @@ function App() {
     setLastSearch(query);
   }, []);
 
-  // function triggerError(): void {
-  //   setShouldThrow(true);
-  // }
+  function triggerError(): void {
+    setShouldThrow(true);
+  }
 
   return (
     <ErrorBoundary>
@@ -80,6 +80,7 @@ function App() {
             <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
           </Routes>
         </div>
+        <button onClick={triggerError}></button>
       </BrowserRouter>
     </ErrorBoundary>
   );
