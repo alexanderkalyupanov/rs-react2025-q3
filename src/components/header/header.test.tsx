@@ -5,7 +5,7 @@ import Header from './header';
 
 describe('Header Component', () => {
   const mockProps = {
-    loading: false,
+    isLoading: false,
     searchQuery: '',
     onSearch: vi.fn(),
   };

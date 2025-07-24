@@ -4,6 +4,9 @@ import ErrorBoundary from '../errorBoundary/errorBoundary';
 import Main from '../main/main';
 import Header from '../header/header';
 import { fetchCharacters } from '../../services/service';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import About from '../About/About';
+import NotFoundPage from '../NotFound/NotFoundComponent';
 
 // interface AppState {
 //   characters: Array<Character>;
@@ -54,20 +57,31 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="bg-violet-600">
-        <Header
-          isLoading={loading}
-          searchQuery={lastSearch}
-          onSearch={handleSearch}
-        ></Header>
-        <Main
-          characters={characters}
-          error={error}
-          isLoading={loading}
-          shouldThrow={shouldThrow}
-          onTriggerError={triggerError}
-        ></Main>
-      </div>
+      <BrowserRouter>
+        <div className="bg-violet-600">
+          <Header
+            isLoading={loading}
+            searchQuery={lastSearch}
+            onSearch={handleSearch}
+          ></Header>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  characters={characters}
+                  error={error}
+                  isLoading={loading}
+                  shouldThrow={shouldThrow}
+                  onTriggerError={triggerError}
+                ></Main>
+              }
+            ></Route>
+            <Route path="/about" element={<About></About>}></Route>
+            <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
+          </Routes>
+        </div>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 }

@@ -1,41 +1,27 @@
 import SearchComponent from '../Search/Search';
-
+import { NavLink } from 'react-router';
 interface HeaderProps {
-  loading: boolean;
+  isLoading: boolean;
   searchQuery: string;
   onSearch: (query: string) => void;
 }
 
-function Header({ searchQuery, onSearch, loading }: HeaderProps) {
+function Header({ searchQuery, onSearch, isLoading }: HeaderProps) {
   return (
     <header className="flex px-7 py-7 justify-between">
-      <h1 className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
-        Rick & Morty
-      </h1>
+      <NavLink to="/">
+        <h1 className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
+          Rick & Morty
+        </h1>
+      </NavLink>
+      <NavLink to="/about">About</NavLink>
       <SearchComponent
         onSearch={onSearch}
         searchQuery={searchQuery}
-        loading={loading}
+        isLoading={isLoading}
       ></SearchComponent>
     </header>
   );
 }
-// class Header extends React.Component<HeaderProps> {
-//   render() {
-//     const { loading, searchQuery, onSearch } = this.props;
-//     return (
-//       <header className="flex px-7 py-7 justify-between">
-//         <h1 className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
-//           Rick & Morty
-//         </h1>
-//         <SearchComponent
-//           onSearch={onSearch}
-//           searchQuery={searchQuery}
-//           loading={loading}
-//         ></SearchComponent>
-//       </header>
-//     );
-//   }
-// }
 
 export default Header;
