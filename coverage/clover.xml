@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1753438065413" clover="3.2.0">
-  <project timestamp="1753438065413" name="All files">
-    <metrics statements="526" coveredstatements="421" conditionals="52" coveredconditionals="43" methods="25" coveredmethods="14" elements="603" coveredelements="478" complexity="0" loc="526" ncloc="526" packages="15" files="15" classes="15"/>
+<coverage generated="1753440386123" clover="3.2.0">
+  <project timestamp="1753440386124" name="All files">
+    <metrics statements="542" coveredstatements="437" conditionals="56" coveredconditionals="47" methods="26" coveredmethods="15" elements="624" coveredelements="499" complexity="0" loc="542" ncloc="542" packages="16" files="16" classes="16"/>
     <package name="src">
       <metrics statements="16" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="main.tsx" path="C:\Users\Александр\Documents\GitHub\rs-react2025-q3\src\main.tsx">
@@ -269,42 +269,44 @@
       </file>
     </package>
     <package name="src.components.Search">
-      <metrics statements="33" coveredstatements="33" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
+      <metrics statements="35" coveredstatements="35" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
       <file name="Search.tsx" path="C:\Users\Александр\Documents\GitHub\rs-react2025-q3\src\components\Search\Search.tsx">
-        <metrics statements="33" coveredstatements="33" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <metrics statements="35" coveredstatements="35" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
-        <line num="9" count="30" type="cond" truecount="1" falsecount="0"/>
-        <line num="10" count="30" type="stmt"/>
-        <line num="12" count="30" type="cond" truecount="1" falsecount="0"/>
-        <line num="13" count="8" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="10" count="33" type="cond" truecount="1" falsecount="0"/>
+        <line num="11" count="33" type="stmt"/>
+        <line num="12" count="33" type="stmt"/>
+        <line num="13" count="33" type="cond" truecount="1" falsecount="0"/>
         <line num="14" count="8" type="stmt"/>
-        <line num="16" count="30" type="cond" truecount="1" falsecount="0"/>
-        <line num="17" count="4" type="stmt"/>
+        <line num="15" count="8" type="stmt"/>
+        <line num="17" count="33" type="cond" truecount="1" falsecount="0"/>
         <line num="18" count="4" type="stmt"/>
         <line num="19" count="4" type="stmt"/>
         <line num="20" count="4" type="stmt"/>
         <line num="21" count="4" type="stmt"/>
-        <line num="23" count="30" type="stmt"/>
-        <line num="24" count="30" type="stmt"/>
-        <line num="25" count="30" type="stmt"/>
-        <line num="26" count="30" type="stmt"/>
-        <line num="27" count="30" type="stmt"/>
-        <line num="29" count="30" type="stmt"/>
-        <line num="30" count="30" type="stmt"/>
-        <line num="31" count="30" type="stmt"/>
-        <line num="32" count="30" type="stmt"/>
-        <line num="33" count="30" type="stmt"/>
-        <line num="34" count="30" type="stmt"/>
-        <line num="37" count="30" type="stmt"/>
-        <line num="38" count="30" type="stmt"/>
-        <line num="39" count="30" type="stmt"/>
-        <line num="40" count="30" type="stmt"/>
-        <line num="41" count="30" type="stmt"/>
-        <line num="43" count="30" type="stmt"/>
-        <line num="44" count="30" type="stmt"/>
-        <line num="45" count="30" type="stmt"/>
-        <line num="47" count="30" type="stmt"/>
-        <line num="49" count="1" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="24" count="33" type="stmt"/>
+        <line num="25" count="33" type="stmt"/>
+        <line num="26" count="33" type="stmt"/>
+        <line num="27" count="33" type="stmt"/>
+        <line num="28" count="33" type="stmt"/>
+        <line num="30" count="33" type="stmt"/>
+        <line num="31" count="33" type="stmt"/>
+        <line num="32" count="33" type="stmt"/>
+        <line num="33" count="33" type="stmt"/>
+        <line num="34" count="33" type="stmt"/>
+        <line num="35" count="33" type="stmt"/>
+        <line num="38" count="33" type="stmt"/>
+        <line num="39" count="33" type="stmt"/>
+        <line num="40" count="33" type="stmt"/>
+        <line num="41" count="33" type="stmt"/>
+        <line num="42" count="33" type="stmt"/>
+        <line num="44" count="33" type="stmt"/>
+        <line num="45" count="33" type="stmt"/>
+        <line num="46" count="33" type="stmt"/>
+        <line num="48" count="33" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Spinner">
@@ -616,6 +618,26 @@
         <line num="77" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.useLocalStorage">
+      <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+      <file name="useLocalStorage.tsx" path="C:\Users\Александр\Documents\GitHub\rs-react2025-q3\src\useLocalStorage\useLocalStorage.tsx">
+        <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="4" count="33" type="stmt"/>
+        <line num="5" count="33" type="stmt"/>
+        <line num="6" count="33" type="stmt"/>
+        <line num="7" count="33" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="13" type="stmt"/>
+        <line num="9" count="13" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="33" type="stmt"/>
+        <line num="12" count="33" type="cond" truecount="1" falsecount="0"/>
+        <line num="13" count="17" type="stmt"/>
+        <line num="14" count="33" type="stmt"/>
+        <line num="16" count="33" type="stmt"/>
+        <line num="17" count="33" type="stmt"/>
       </file>
     </package>
   </project>

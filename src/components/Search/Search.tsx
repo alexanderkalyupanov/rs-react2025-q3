@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocalStorage } from '../../useLocalStorage/useLocalStorage';
 
 interface SearchProps {
   searchQuery: string;
@@ -8,7 +9,7 @@ interface SearchProps {
 
 function SearchComponent({ searchQuery = '', onSearch }: SearchProps) {
   const [query, setQuery] = useState(searchQuery);
-
+  const [, setData] = useLocalStorage('searchQuery', '');
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setQuery(e.target.value);
   }
@@ -16,7 +17,7 @@ function SearchComponent({ searchQuery = '', onSearch }: SearchProps) {
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     const queryTrimmed = query.trim();
-    localStorage.setItem('searchQuery', queryTrimmed);
+    setData(queryTrimmed);
     onSearch(queryTrimmed);
   }
 
