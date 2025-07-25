@@ -5,6 +5,7 @@ import { fetchCharacters } from '../../services/service';
 import { describe, vi, it, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { mockCharacters } from '../../tests/mockData';
+import { BrowserRouter } from 'react-router';
 
 vi.mock('./style.css', () => ({}));
 
@@ -44,7 +45,11 @@ describe('App component', () => {
       data: mockCharacters,
       error: null,
     });
-    render(<App></App>);
+    render(
+      <BrowserRouter>
+        <App></App>
+      </BrowserRouter>
+    );
     expect(screen.getByTestId('loading-box')).toBeInTheDocument();
 
     await waitFor(() => {
@@ -58,7 +63,11 @@ describe('App component', () => {
       data: null,
       error: 'Failed to fetch characters',
     });
-    render(<App></App>);
+    render(
+      <BrowserRouter>
+        <App></App>
+      </BrowserRouter>
+    );
 
     await waitFor(() => {
       expect(
@@ -69,7 +78,11 @@ describe('App component', () => {
   });
 
   it('should have search query in localstorage', async () => {
-    render(<App></App>);
+    render(
+      <BrowserRouter>
+        <App></App>
+      </BrowserRouter>
+    );
     const search = screen.getByPlaceholderText(/search.../i);
     await userEvent.type(search, 'Rick{enter}');
 

@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Main from './main';
 import { mockCharacters } from '../../tests/mockData';
+import { BrowserRouter } from 'react-router';
 
 vi.mock('../cardList/CardList', () => ({
   default: vi.fn(() => <div data-testid="mock-card-list" />),
@@ -14,10 +15,17 @@ describe('Main Component', () => {
     isLoading: false,
     error: null,
     shouldThrow: false,
+    currentPage: 1,
+    totalPages: 3,
+    searchQuery: '',
   };
 
   it('renders CardList with correct props', () => {
-    render(<Main {...defaultProps} />);
+    render(
+      <BrowserRouter>
+        <Main {...defaultProps} />
+      </BrowserRouter>
+    );
 
     const cardList = screen.getByTestId('mock-card-list');
     expect(cardList).toBeInTheDocument();
@@ -30,7 +38,11 @@ describe('Main Component', () => {
       shouldThrow: true,
       error: 'error',
     };
-    render(<Main {...props}></Main>);
+    render(
+      <BrowserRouter>
+        <Main {...props} />
+      </BrowserRouter>
+    );
 
     const cardList = screen.getByTestId('mock-card-list');
     expect(cardList).toBeInTheDocument();
