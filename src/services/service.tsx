@@ -5,15 +5,31 @@ const API_BASE_URL = 'https://rickandmortyapi.com/api/character';
 interface ApiResponse {
   results: Character[];
   error?: string;
+  info?: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
 }
 
 export const fetchCharacters = async (
-  query: string = ''
-): Promise<{ data: Character[] | null; error: string | null }> => {
+  query: string = '',
+  page: number = 1
+): Promise<{
+  data: Character[] | null;
+  error: string | null;
+  info?: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+}> => {
   try {
     const url = query
-      ? `${API_BASE_URL}/?name=${encodeURIComponent(query)}`
-      : API_BASE_URL;
+      ? `${API_BASE_URL}/?name=${encodeURIComponent(query)}&page=${page}`
+      : `${API_BASE_URL}/?page=${page}`;
     const response = await fetch(url);
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
@@ -35,7 +51,11 @@ export const fetchCharacters = async (
       throw new Error(errorMessage);
     }
     const data: ApiResponse = await response.json();
-    return { data: data.results || [], error: null };
+    return {
+      data: data.results || [],
+      error: null,
+      info: data.info,
+    };
   } catch (error) {
     return {
       data: null,
