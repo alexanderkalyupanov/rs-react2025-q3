@@ -4,28 +4,16 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   searchQuery: string;
-  isLoading: boolean;
-  onPageChange: (page: number) => void;
 }
 
-function Pagination({
-  currentPage,
-  totalPages,
-  isLoading,
-  onPageChange,
-}: PaginationProps) {
+function Pagination({ currentPage, totalPages }: PaginationProps) {
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const getPageUrl = (page: number) => {
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('page', page.toString());
-    return `${location.pathname}?${searchParams.toString()}`;
-  };
-
-  const handleClick = (page: number) => {
-    if (!isLoading) {
-      onPageChange(page);
-    }
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', page.toString());
+    return `${location.pathname}?${newParams.toString()}`;
   };
 
   if (totalPages <= 1) return null;
@@ -36,7 +24,6 @@ function Pagination({
         {currentPage > 1 && (
           <Link
             to={getPageUrl(currentPage - 1)}
-            onClick={() => handleClick(currentPage - 1)}
             className="px-3 py-1 bg-violet-500 text-white rounded hover:bg-violet-600"
           >
             &laquo; Prev
@@ -73,7 +60,6 @@ function Pagination({
         {currentPage < totalPages && (
           <Link
             to={getPageUrl(currentPage + 1)}
-            onClick={() => handleClick(currentPage + 1)}
             className="px-3 py-1 bg-violet-500 text-white rounded hover:bg-violet-600"
           >
             Next &raquo;

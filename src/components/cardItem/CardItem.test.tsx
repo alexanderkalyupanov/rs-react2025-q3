@@ -3,10 +3,16 @@ import '@testing-library/jest-dom';
 import CardItem from './CardItem';
 import { describe, test, expect } from 'vitest';
 import { emptyCharacter, mockCharacter } from '../../tests/mockData';
+import { MemoryRouter } from 'react-router';
 
 describe('CardItem tests', () => {
   test('render name and description character', () => {
-    render(<CardItem character={mockCharacter}></CardItem>);
+    render(
+      <MemoryRouter>
+        <CardItem character={mockCharacter} />
+      </MemoryRouter>
+    );
+
     const card = screen.getByTestId('character-card');
     expect(card).toBeInTheDocument();
     expect(card).toHaveClass('bg-purple-500');
@@ -28,7 +34,12 @@ describe('CardItem tests', () => {
   });
 
   test('missing props characters', () => {
-    render(<CardItem character={emptyCharacter}></CardItem>);
+    render(
+      <MemoryRouter>
+        <CardItem character={emptyCharacter} />
+      </MemoryRouter>
+    );
+
     expect(screen.getByTestId('character-card')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toBeInTheDocument();
     expect(screen.getByRole('heading').textContent).toBe('');

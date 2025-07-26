@@ -10,11 +10,16 @@ function Header({ searchQuery, onSearch, isLoading }: HeaderProps) {
   return (
     <header className="flex px-7 py-7 justify-between">
       <NavLink to="/">
-        <h1 className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
+        <h1 className="flex items-center justify-center text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
           Rick & Morty
         </h1>
       </NavLink>
-      <NavLink to="/about">About</NavLink>
+      <NavLink
+        to="/about"
+        className="flex items-center justify-center md:text-lg lg:text-xl xl:text-2xl hover:text-pink-200 transition"
+      >
+        About
+      </NavLink>
       <SearchComponent
         onSearch={onSearch}
         searchQuery={searchQuery}

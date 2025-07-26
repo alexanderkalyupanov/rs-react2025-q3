@@ -7,6 +7,7 @@ import { fetchCharacters } from '../../services/service';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import About from '../About/About';
 import NotFoundPage from '../NotFound/NotFoundComponent';
+import CharacterDetails from '../CharacterDetails/СharacterDetails';
 
 // interface AppState {
 //   characters: Array<Character>;
@@ -74,7 +75,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="bg-violet-600">
+      <div className="bg-violet-600 min-h-screen">
         <Header
           isLoading={loading}
           searchQuery={lastSearch}
@@ -94,7 +95,12 @@ function App() {
                 searchQuery={lastSearch}
               ></Main>
             }
-          ></Route>
+          >
+            <Route
+              path="character/:id"
+              element={<CharacterDetails></CharacterDetails>}
+            ></Route>
+          </Route>
           <Route path="/about" element={<About></About>}></Route>
           <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
         </Routes>

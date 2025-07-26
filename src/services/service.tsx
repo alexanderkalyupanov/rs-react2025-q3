@@ -63,3 +63,13 @@ export const fetchCharacters = async (
     };
   }
 };
+
+export async function fetchCharacterById(id: number): Promise<Character> {
+  const response = await fetch(
+    `https://rickandmortyapi.com/api/character/${id}`
+  );
+  if (!response.ok) {
+    throw new Error('Character not found');
+  }
+  return response.json();
+}
