@@ -1,8 +1,9 @@
 import { describe, it, vi, expect } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Main from './main';
 import { mockCharacters } from '../../tests/mockData';
+import { BrowserRouter } from 'react-router';
 
 vi.mock('../cardList/CardList', () => ({
   default: vi.fn(() => <div data-testid="mock-card-list" />),
@@ -11,14 +12,20 @@ vi.mock('../cardList/CardList', () => ({
 describe('Main Component', () => {
   const defaultProps = {
     characters: mockCharacters,
-    loading: false,
+    isLoading: false,
     error: null,
     shouldThrow: false,
-    onTriggerError: vi.fn(),
+    currentPage: 1,
+    totalPages: 3,
+    searchQuery: '',
   };
 
   it('renders CardList with correct props', () => {
-    render(<Main {...defaultProps} />);
+    render(
+      <BrowserRouter>
+        <Main {...defaultProps} />
+      </BrowserRouter>
+    );
 
     const cardList = screen.getByTestId('mock-card-list');
     expect(cardList).toBeInTheDocument();
@@ -31,25 +38,13 @@ describe('Main Component', () => {
       shouldThrow: true,
       error: 'error',
     };
-    render(<Main {...props}></Main>);
+    render(
+      <BrowserRouter>
+        <Main {...props} />
+      </BrowserRouter>
+    );
 
     const cardList = screen.getByTestId('mock-card-list');
     expect(cardList).toBeInTheDocument();
-  });
-
-  it('render trigger error btn', () => {
-    render(<Main {...defaultProps}></Main>);
-
-    const button = screen.getByRole('button', { name: /trigger test error/i });
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass('bg-red-500');
-  });
-
-  it('calls triggerError when btn click', () => {
-    const mockTriggerError = vi.fn();
-    render(<Main {...defaultProps} onTriggerError={mockTriggerError}></Main>);
-    const button = screen.getByRole('button', { name: /trigger test error/i });
-    fireEvent.click(button);
-    expect(mockTriggerError).toHaveBeenCalledTimes(1);
   });
 });

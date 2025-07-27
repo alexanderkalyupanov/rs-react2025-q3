@@ -23,7 +23,7 @@ describe('Service api test', () => {
     vi.mocked(fetch).mockResolvedValue(mockResponse);
     const result = await fetchCharacters();
     expect(fetch).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character'
+      'https://rickandmortyapi.com/api/character/?page=1'
     );
     expect(result.data).toEqual(mockCharacters);
     expect(result.error).toBeNull();
@@ -41,7 +41,7 @@ describe('Service api test', () => {
     vi.mocked(fetch).mockResolvedValue(mockResponse);
     const result = await fetchCharacters('Rick');
     expect(fetch).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Rick'
+      'https://rickandmortyapi.com/api/character/?name=Rick&page=1'
     );
     expect(result.data).toEqual([mockCharacters[0]]);
     expect(result.error).toBeNull();
@@ -59,7 +59,7 @@ describe('Service api test', () => {
     vi.mocked(fetch).mockResolvedValue(mockResponse);
     const result = await fetchCharacters('Morty');
     expect(fetch).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Morty'
+      'https://rickandmortyapi.com/api/character/?name=Morty&page=1'
     );
     expect(result.data).toEqual([mockCharacters[1]]);
     expect(result.error).toBeNull();

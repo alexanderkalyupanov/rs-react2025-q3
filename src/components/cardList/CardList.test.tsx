@@ -3,17 +3,26 @@ import CardList from './CardList';
 import { describe, test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { mockCharacters } from '../../tests/mockData';
+import { MemoryRouter } from 'react-router';
 
 describe('CardList Component', () => {
+  const defaultProps = {
+    currentPage: 1,
+    totalPages: 10,
+    searchQuery: '',
+  };
   describe('render tests', () => {
     test('render items', () => {
       render(
-        <CardList
-          characters={mockCharacters}
-          loading={false}
-          error={null}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={mockCharacters}
+            isLoading={false}
+            error={null}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       const items = screen.getAllByTestId('character-card');
       expect(items).toHaveLength(2);
@@ -21,36 +30,45 @@ describe('CardList Component', () => {
 
     test('display no results comment', () => {
       render(
-        <CardList
-          characters={[]}
-          loading={false}
-          error={null}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={[]}
+            isLoading={false}
+            error={null}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       expect(screen.getByText('No characters found')).toBeInTheDocument();
     });
 
     test('show loading spinner', () => {
       render(
-        <CardList
-          characters={[]}
-          loading={true}
-          error={null}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={[]}
+            isLoading={true}
+            error={null}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       expect(screen.getByTestId('loading-box')).toBeInTheDocument();
       expect(screen.getByTestId('loading')).toHaveClass('animate-spin');
     });
     test('unshow loading spinner', () => {
       render(
-        <CardList
-          characters={[]}
-          loading={false}
-          error={null}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={[]}
+            isLoading={false}
+            error={null}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       expect(screen.queryByTestId('loading-box')).toBeNull();
       expect(screen.queryByTestId('loading')).toBeNull();
@@ -60,12 +78,15 @@ describe('CardList Component', () => {
   describe('correct display data characters', () => {
     test('correctly display item name and description', () => {
       render(
-        <CardList
-          characters={mockCharacters}
-          loading={false}
-          error={null}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={mockCharacters}
+            isLoading={false}
+            error={null}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
       expect(screen.getByText('Morty Smith')).toBeInTheDocument();
@@ -87,12 +108,15 @@ describe('CardList Component', () => {
         created: '',
       };
       render(
-        <CardList
-          characters={[misCharacter]}
-          loading={false}
-          error={null}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={[misCharacter]}
+            isLoading={false}
+            error={null}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       expect(screen.getByText('Unknown')).toBeInTheDocument();
     });
@@ -102,12 +126,15 @@ describe('CardList Component', () => {
     test('display error message', () => {
       const errorMessage = 'Failed to fetch characters';
       render(
-        <CardList
-          characters={[]}
-          loading={false}
-          error={errorMessage}
-          shouldThrow={false}
-        ></CardList>
+        <MemoryRouter>
+          <CardList
+            characters={[]}
+            isLoading={false}
+            error={errorMessage}
+            shouldThrow={false}
+            {...defaultProps}
+          ></CardList>
+        </MemoryRouter>
       );
       expect(screen.getByText(errorMessage)).toBeInTheDocument();
       expect(screen.getByText(errorMessage)).toHaveClass('text-red-500');
@@ -120,12 +147,15 @@ describe('CardList Component', () => {
       console.error = vi.fn();
       expect(() =>
         render(
-          <CardList
-            characters={mockCharacters}
-            loading={false}
-            error={null}
-            shouldThrow={true}
-          />
+          <MemoryRouter>
+            <CardList
+              characters={mockCharacters}
+              isLoading={false}
+              error={null}
+              shouldThrow={true}
+              {...defaultProps}
+            />
+          </MemoryRouter>
         )
       ).toThrow('Test error triggered by button');
       console.error = originalError;

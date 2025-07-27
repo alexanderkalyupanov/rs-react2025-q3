@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router';
 
 export interface Character {
   id: number;
@@ -8,8 +8,12 @@ export interface Character {
   image: string;
   status: string;
   type: string;
-  origin: object;
-  location: object;
+  origin: {
+    name: string;
+  };
+  location: {
+    name: string;
+  };
   episode: Array<string>;
   url: string;
   created: string;
@@ -19,10 +23,17 @@ interface CardItemProps {
   character: Character;
 }
 
-class CardItem extends React.Component<CardItemProps> {
-  render() {
-    const { character } = this.props;
-    return (
+function CardItem({ character }: CardItemProps) {
+  const searchParams = new URLSearchParams(location.search);
+  searchParams.set('details', character.id.toString());
+  return (
+    <Link
+      to={{
+        pathname: `/character/${character.id}`,
+        search: searchParams.toString(),
+      }}
+      className="block p-4 hover:bg-gray-100"
+    >
       <div
         className="item flex flex-col justify-center items-start w-90 border-3 border-solid border-purple-500 rounded-3xl pb-4 mb-5 bg-purple-500"
         data-testid="character-card"
@@ -46,8 +57,8 @@ class CardItem extends React.Component<CardItemProps> {
           </p>
         </div>
       </div>
-    );
-  }
+    </Link>
+  );
 }
 
 export default CardItem;

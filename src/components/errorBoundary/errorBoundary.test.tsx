@@ -1,70 +1,85 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import ErrorBoundary from './errorBoundary';
 import '@testing-library/jest-dom';
-import App from '../App/App';
 
-vi.mock('../cardList/CardList', () => ({
-  __esModule: true,
-  default: ({ shouldThrow }: { shouldThrow: boolean }) => {
-    if (shouldThrow) throw new Error('CardList Error!');
-    return <div>Mock CardList</div>;
-  },
-}));
+const ErrorComponent = () => {
+  throw new Error('Test error');
+};
 
-describe('Error boundary', () => {
+describe('ErrorBoundary', () => {
   beforeEach(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
-  it('renders children error boundary', () => {
+  it('renders children when no error occurs', () => {
     render(
       <ErrorBoundary>
-        <div>Content</div>
+        <div>Test content</div>
       </ErrorBoundary>
     );
-    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    expect(screen.getByText('Test content')).toBeInTheDocument();
+    expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
   });
 
-  it('renders fallback UI', () => {
-    render(<App></App>);
-    expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument();
-    const triggerBtn = screen.getByRole('button', {
-      name: /trigger test error/i,
-    });
-    fireEvent.click(triggerBtn);
+  it('renders fallback UI when error occurs', () => {
+    render(
+      <ErrorBoundary>
+        <ErrorComponent />
+      </ErrorBoundary>
+    );
 
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
     expect(screen.getByText('Please try again later')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /reload page/i }));
+    expect(
+      screen.getByRole('button', { name: /reload page/i })
+    ).toBeInTheDocument();
   });
 
-  it('show error in console', () => {
+  it('logs error to console when error occurs', () => {
     const consoleSpy = vi.spyOn(console, 'error');
-    render(<App></App>);
-    const triggerBtn = screen.getByRole('button', {
-      name: /trigger test error/i,
-    });
-    fireEvent.click(triggerBtn);
+
+    render(
+      <ErrorBoundary>
+        <ErrorComponent />
+      </ErrorBoundary>
+    );
+
     expect(consoleSpy).toHaveBeenCalled();
   });
 
-  it('reloads page in click btn reload page', () => {
+  it('reloads page when reload button is clicked', () => {
     const reloadMock = vi.fn();
     vi.stubGlobal('location', { reload: reloadMock });
 
-    render(<App></App>);
-    const triggerBtn = screen.getByRole('button', {
-      name: /trigger test error/i,
-    });
-    fireEvent.click(triggerBtn);
+    render(
+      <ErrorBoundary>
+        <ErrorComponent />
+      </ErrorBoundary>
+    );
 
-    fireEvent.click(screen.getByRole('button', { name: /reload page/i }));
+    const reloadButton = screen.getByRole('button', { name: /reload page/i });
+    fireEvent.click(reloadButton);
+
     expect(reloadMock).toHaveBeenCalledOnce();
-    vi.unstubAllGlobals();
+  });
+
+  it('works with router components', () => {
+    render(
+      <MemoryRouter>
+        <ErrorBoundary>
+          <div>Router content</div>
+        </ErrorBoundary>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Router content')).toBeInTheDocument();
   });
 });

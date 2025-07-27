@@ -1,39 +1,74 @@
-import React from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
+import Pagination from '../Pagination/Pagination';
 import type { Character } from '../cardItem/CardItem';
 import CardList from '../cardList/CardList';
+import { useState } from 'react';
 
 interface MainProps {
   characters: Character[];
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
   shouldThrow: boolean;
-  onTriggerError: () => void;
+  currentPage: number;
+  totalPages: number;
+  searchQuery: string;
 }
 
-class Main extends React.Component<MainProps> {
-  render() {
-    const { characters, loading, error, shouldThrow, onTriggerError } =
-      this.props;
+function Main({
+  characters,
+  isLoading,
+  error,
+  shouldThrow,
+  currentPage,
+  totalPages,
+  searchQuery,
+}: MainProps) {
+  const [isOpenPanel, setIsOpenPanel] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isCharacterRoute = location.pathname.includes('/character/');
 
-    return (
-      <main>
+  const handleClosePanel = () => {
+    navigate('/');
+    setIsOpenPanel(false);
+  };
+
+  const handleMainClick = () => {
+    if (isOpenPanel) {
+      handleClosePanel();
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen">
+      <div
+        className={`${isCharacterRoute ? 'w-2/3' : 'w-full'} p-5 overflow-y-auto`}
+        onClick={handleMainClick}
+      >
         <CardList
           characters={characters}
           error={error}
-          loading={loading}
+          isLoading={isLoading}
           shouldThrow={shouldThrow}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          searchQuery={searchQuery}
         />
-        <div className="mt-4 text-center pb-5">
-          <button
-            onClick={onTriggerError}
-            className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer"
-          >
-            Trigger Test Error
-          </button>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          searchQuery={searchQuery}
+        />
+      </div>
+      {isCharacterRoute && (
+        <div className="fixed inset-y-0 right-0 w-1/3 border-l border-gray-300 shadow-lg z-10 top-22">
+          <div className="h-full overflow-y-auto pt-12">
+            <Outlet />
+          </div>
         </div>
-      </main>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 export default Main;
