@@ -8,7 +8,7 @@ interface HeaderProps {
 
 function Header({ searchQuery, onSearch, isLoading }: HeaderProps) {
   return (
-    <header className="flex px-7 py-7 justify-between">
+    <header className="flex px-7 py-7 justify-between md:flex-row gap-4">
       <NavLink to="/">
         <h1 className="flex items-center justify-center text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
           Rick & Morty

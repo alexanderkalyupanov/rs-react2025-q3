@@ -52,10 +52,11 @@ function CharacterDetails() {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto h-full overflow-y-auto p-6">
+    <div className="p-8 max-w-4xl mx-auto h-full overflow-y-auto p-6 md:p-8 max-w-4xl">
       <button
         onClick={handleClose}
-        className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
+        className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition-colors cursor-pointer md:right-4"
+        aria-label="Close details"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +73,7 @@ function CharacterDetails() {
           />
         </svg>
       </button>
-      <div className="flex flex-col w-100 gap-8">
+      <div className="flex flex-col w-100 gap-4 md:gap-8">
         <img
           src={character.image}
           alt={character.name}

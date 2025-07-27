@@ -3,7 +3,10 @@ import gitLogo from './../../assets/git.svg';
 
 function Footer() {
   return (
-    <footer className="flex justify-between items-center mb-10 pl-5 pr-5">
+    <footer
+      data-testid="footer"
+      className="flex justify-between items-center mb-10 pl-5 pr-5"
+    >
       <a
         href="https://rs.school/courses/reactjs"
         target="_blank"
