@@ -8,6 +8,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import About from '../About/About';
 import NotFoundPage from '../NotFound/NotFoundComponent';
 import CharacterDetails from '../CharacterDetails/СharacterDetails';
+import SelectedItemsPanel from '../SelectedItemsPanel/SelectedItemsPanel';
 
 // interface AppState {
 //   characters: Array<Character>;
@@ -85,15 +86,18 @@ function App() {
           <Route
             path="/"
             element={
-              <Main
-                characters={characters}
-                error={error}
-                isLoading={loading}
-                shouldThrow={shouldThrow}
-                currentPage={currentPage}
-                totalPages={totalPage}
-                searchQuery={lastSearch}
-              ></Main>
+              <>
+                <Main
+                  characters={characters}
+                  error={error}
+                  isLoading={loading}
+                  shouldThrow={shouldThrow}
+                  currentPage={currentPage}
+                  totalPages={totalPage}
+                  searchQuery={lastSearch}
+                ></Main>
+                <SelectedItemsPanel></SelectedItemsPanel>
+              </>
             }
           >
             <Route

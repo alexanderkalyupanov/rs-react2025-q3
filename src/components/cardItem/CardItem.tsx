@@ -53,13 +53,6 @@ function CardItem({ character }: CardItemProps) {
         className="item flex flex-col justify-center items-start w-90 border-3 border-solid border-purple-500 rounded-3xl pb-4 mb-5 bg-purple-500"
         data-testid="character-card"
       >
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={handleCheckboxChange}
-          onClick={(e) => e.stopPropagation()}
-          className="top-2 right-2 h-5 w-5 rounded text-pink-600 focus:ring-pink-500"
-        />
         <img
           src={character.image}
           alt={character.name}
@@ -77,6 +70,20 @@ function CardItem({ character }: CardItemProps) {
           <p className="text-rose-100">
             <span className="text-pink-200">Status:</span> {character.status}
           </p>
+          <div className="flex">
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={handleCheckboxChange}
+              onClick={(e) => e.stopPropagation()}
+              className="top-2 right-2 h-5 w-5 rounded text-pink-600 focus:ring-pink-500"
+            />
+            {isSelected ? (
+              <span className="text-pink-200 ml-1">Selected</span>
+            ) : (
+              <span className="text-pink-200 ml-1">Unselected</span>
+            )}
+          </div>
         </div>
       </div>
     </Link>
