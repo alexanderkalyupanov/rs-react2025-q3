@@ -18,9 +18,11 @@ export interface Character {
   type: string;
   origin: {
     name: string;
+    url: string;
   };
   location: {
     name: string;
+    url: string;
   };
   episode: Array<string>;
   url: string;
