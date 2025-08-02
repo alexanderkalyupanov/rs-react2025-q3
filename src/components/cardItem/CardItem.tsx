@@ -1,8 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import type { RootState } from '../../store/store';
-import type { ChangeEvent } from 'react';
+import { type ChangeEvent } from 'react';
 import { toggleCharacterSelected } from '../../store/selectedItemsSlice';
+import {
+  addSelectedCharacterData,
+  removeSelectedCharacterData,
+} from '../../store/charactersSlice';
 
 export interface Character {
   id: number;
@@ -29,16 +33,21 @@ interface CardItemProps {
 
 function CardItem({ character }: CardItemProps) {
   const dispatch = useDispatch();
-  const selectedCharacters = useSelector(
+  const selectedIds = useSelector(
     (state: RootState) => state.selectedItems.selectedCharacters
   );
-  const isSelected = selectedCharacters.includes(character.id);
+  const isSelected = selectedIds.includes(character.id);
   const searchParams = new URLSearchParams(location.search);
   searchParams.set('details', character.id.toString());
 
   function handleCheckboxChange(event: ChangeEvent<HTMLInputElement>): void {
     event.stopPropagation();
     dispatch(toggleCharacterSelected(character.id));
+    if (!isSelected) {
+      dispatch(addSelectedCharacterData(character));
+    } else {
+      dispatch(removeSelectedCharacterData(character.id));
+    }
   }
 
   return (

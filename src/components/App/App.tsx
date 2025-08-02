@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { Character } from '../cardItem/CardItem';
 import ErrorBoundary from '../errorBoundary/errorBoundary';
 import Main from '../main/main';
 import Header from '../header/header';
@@ -9,14 +8,7 @@ import About from '../About/About';
 import NotFoundPage from '../NotFound/NotFoundComponent';
 import CharacterDetails from '../CharacterDetails/СharacterDetails';
 import SelectedItemsPanel from '../SelectedItemsPanel/SelectedItemsPanel';
-
-// interface AppState {
-//   characters: Array<Character>;
-//   loading: boolean;
-//   error: string | null;
-//   lastSearch: string;
-//   shouldThrow: boolean;
-// }
+import type { Character } from '../cardItem/CardItem';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -45,13 +37,13 @@ function App() {
       setLoading(true);
       setError(null);
       const { data, error, info } = await fetchCharacters(query, page);
-
       if (error) {
         setError(error);
         setCharacters([]);
         setTotalPage(0);
       } else {
-        setCharacters(data || []);
+        const charactersData = data || [];
+        setCharacters(charactersData);
         setTotalPage(info?.pages || 0);
       }
       setLoading(false);
