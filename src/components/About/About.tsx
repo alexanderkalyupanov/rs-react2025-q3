@@ -9,9 +9,13 @@ function About() {
         className="about flex flex-col md:flex-row justify-center m-auto items-center gap-5 border-solid border-4 border-purple-500 rounded-3xl p-4 md:pl-2 w-full md:w-[700px] mb-10 md:mb-[63px] mt-6 md:mt-[25px]"
       >
         <div className="developer-info flex flex-col justify-center md:text-left order-2 md:order-1">
-          <h1 className="text-xl font-bold">Alexander Kalyupanov</h1>
-          <p className="text-lg md:text-xl">Frontend Developer</p>
-          <span className="text-xl">
+          <h1 className="text-xl font-bold dark:text-zinc-50">
+            Alexander Kalyupanov
+          </h1>
+          <p className="text-lg md:text-xl dark:text-zinc-50">
+            Frontend Developer
+          </p>
+          <span className="text-xl dark:text-zinc-50">
             Github:{' '}
             <a
               href="https://github.com/alexanderkalyupanov"

@@ -68,7 +68,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="bg-violet-600 min-h-screen">
+      <div className="bg-violet-600 min-h-screen dark:bg-violet-900">
         <Header
           isLoading={loading}
           searchQuery={lastSearch}

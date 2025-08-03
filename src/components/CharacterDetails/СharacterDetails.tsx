@@ -55,7 +55,7 @@ function CharacterDetails() {
     <div className="p-8 max-w-4xl mx-auto h-full overflow-y-auto p-6 md:p-8 max-w-4xl">
       <button
         onClick={handleClose}
-        className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition-colors cursor-pointer md:right-4"
+        className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition-colors cursor-pointer md:right-4 dark:text-zinc-50 dark:hover:bg-violet-100"
         aria-label="Close details"
       >
         <svg
@@ -80,20 +80,22 @@ function CharacterDetails() {
           className="w-full  rounded-lg"
         />
         <div>
-          <h2 className="text-3xl font-bold mb-4">{character.name}</h2>
-          <p className="mb-2">
+          <h2 className="text-3xl font-bold mb-4 dark:text-zinc-50">
+            {character.name}
+          </h2>
+          <p className="mb-2 dark:text-zinc-50">
             <strong>Status:</strong> {character.status}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 dark:text-zinc-50">
             <strong>Species:</strong> {character.species}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 dark:text-zinc-50">
             <strong>Gender:</strong> {character.gender}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 dark:text-zinc-50">
             <strong>Origin:</strong> {character.origin.name}
           </p>
-          <p className="mb-2">
+          <p className="mb-2 dark:text-zinc-50">
             <strong>Location:</strong> {character.location.name}
           </p>
         </div>

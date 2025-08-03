@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import SearchComponent from '../Search/Search';
 import { NavLink } from 'react-router';
+import { ThemeContext } from '../../provider/providerTheme';
 interface HeaderProps {
   isLoading: boolean;
   searchQuery: string;
@@ -7,24 +9,37 @@ interface HeaderProps {
 }
 
 function Header({ searchQuery, onSearch, isLoading }: HeaderProps) {
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  const changeTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
   return (
-    <header className="flex px-7 py-7 justify-between md:flex-row gap-4">
+    <header className="flex items-center justify-between px-7 py-7 md:flex-row gap-4">
       <NavLink to="/">
-        <h1 className="flex items-center justify-center text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center">
+        <h1 className="flex items-center justify-center text-2xl sm:text-xl md:text-4xl lg:text-5xl font-light text-center align-center dark:text-stone-50">
           Rick & Morty
         </h1>
       </NavLink>
-      <NavLink
-        to="/about"
-        className="flex items-center justify-center md:text-lg lg:text-xl xl:text-2xl hover:text-pink-200 transition"
-      >
-        About
-      </NavLink>
-      <SearchComponent
-        onSearch={onSearch}
-        searchQuery={searchQuery}
-        isLoading={isLoading}
-      ></SearchComponent>
+      <div className="flex items-center gap-4">
+        <NavLink
+          to="/about"
+          className="flex items-center justify-center md:text-lg lg:text-xl xl:text-2xl hover:text-pink-200 transition dark:text-stone-50 dark:hover:text-pink-100"
+        >
+          About
+        </NavLink>
+        <button
+          className="flex items-center justify-center md:text-lg lg:text-xl xl:text-2xl hover:text-pink-200 transition dark:text-stone-50 dark:hover:text-pink-100 cursor-pointer"
+          onClick={changeTheme}
+        >
+          {theme === 'dark' ? <>Dark</> : <>Light</>}
+        </button>
+        <SearchComponent
+          onSearch={onSearch}
+          searchQuery={searchQuery}
+          isLoading={isLoading}
+        ></SearchComponent>
+      </div>
     </header>
   );
 }

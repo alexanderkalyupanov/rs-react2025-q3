@@ -35,7 +35,7 @@ describe('Search Component', () => {
       expect(
         render(
           <SearchComponent
-            loading={false}
+            isLoading={false}
             searchQuery=""
             onSearch={mockOnSearch}
           ></SearchComponent>
@@ -46,7 +46,7 @@ describe('Search Component', () => {
     it('render search input and button', () => {
       render(
         <SearchComponent
-          loading={false}
+          isLoading={false}
           searchQuery=""
           onSearch={mockOnSearch}
         ></SearchComponent>
@@ -64,7 +64,7 @@ describe('Search Component', () => {
       window.localStorage.setItem('searchQuery', 'котики');
       render(
         <SearchComponent
-          loading={false}
+          isLoading={false}
           searchQuery="котики"
           onSearch={mockOnSearch}
         ></SearchComponent>
@@ -76,7 +76,7 @@ describe('Search Component', () => {
       window.localStorage.clear();
       render(
         <SearchComponent
-          loading={false}
+          isLoading={false}
           searchQuery=""
           onSearch={mockOnSearch}
         ></SearchComponent>
@@ -89,7 +89,7 @@ describe('Search Component', () => {
     it('update input value when user types', () => {
       render(
         <SearchComponent
-          loading={false}
+          isLoading={false}
           onSearch={mockOnSearch}
           searchQuery=""
         ></SearchComponent>
@@ -101,7 +101,7 @@ describe('Search Component', () => {
     it('detete trims after button search click', () => {
       render(
         <SearchComponent
-          loading={false}
+          isLoading={false}
           onSearch={mockOnSearch}
           searchQuery=""
         ></SearchComponent>
@@ -117,7 +117,7 @@ describe('Search Component', () => {
   it('saving query in localstorage', () => {
     render(
       <SearchComponent
-        loading={false}
+        isLoading={false}
         searchQuery=""
         onSearch={mockOnSearch}
       ></SearchComponent>
@@ -126,14 +126,14 @@ describe('Search Component', () => {
     const button = screen.getByRole('button', { name: /search/i });
     fireEvent.change(input, { target: { value: 'собаки' } });
     fireEvent.click(button);
-    expect(localStorage.getItem('searchQuery')).toBe('собаки');
+    expect(localStorage.getItem('searchQuery')).toBe('"собаки"');
     expect(mockOnSearch).toHaveBeenCalledWith('собаки');
   });
 
   it('rewriting query in localstorage', () => {
     render(
       <SearchComponent
-        loading={false}
+        isLoading={false}
         searchQuery="собаки"
         onSearch={mockOnSearch}
       ></SearchComponent>
@@ -142,13 +142,17 @@ describe('Search Component', () => {
     const button = screen.getByRole('button', { name: /search/i });
     fireEvent.change(input, { target: { value: 'птицы' } });
     fireEvent.click(button);
-    expect(localStorage.getItem('searchQuery')).toBe('птицы');
+    expect(localStorage.getItem('searchQuery')).toBe('"птицы"');
     expect(mockOnSearch).toHaveBeenCalledWith('птицы');
   });
 
   it('should disable button when loading', () => {
     render(
-      <SearchComponent loading={true} searchQuery="" onSearch={mockOnSearch} />
+      <SearchComponent
+        isLoading={true}
+        searchQuery=""
+        onSearch={mockOnSearch}
+      />
     );
     expect(screen.getByRole('button')).not.toBeDisabled();
   });
