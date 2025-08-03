@@ -4,8 +4,9 @@ import '@testing-library/jest-dom';
 import { fetchCharacters } from '../../services/service';
 import { describe, vi, it, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { mockCharacters } from '../../tests/mockData';
+import { mockCharacters, mockStore } from '../../tests/mockData';
 import { BrowserRouter } from 'react-router';
+import { Provider } from 'react-redux';
 
 vi.mock('./style.css', () => ({}));
 
@@ -47,7 +48,9 @@ describe('App component', () => {
     });
     render(
       <BrowserRouter>
-        <App></App>
+        <Provider store={mockStore}>
+          <App></App>
+        </Provider>
       </BrowserRouter>
     );
     expect(screen.getByTestId('loading-box')).toBeInTheDocument();
@@ -65,7 +68,9 @@ describe('App component', () => {
     });
     render(
       <BrowserRouter>
-        <App></App>
+        <Provider store={mockStore}>
+          <App></App>
+        </Provider>
       </BrowserRouter>
     );
 
@@ -80,7 +85,9 @@ describe('App component', () => {
   it('should have search query in localstorage', async () => {
     render(
       <BrowserRouter>
-        <App></App>
+        <Provider store={mockStore}>
+          <App></App>
+        </Provider>
       </BrowserRouter>
     );
     const search = screen.getByPlaceholderText(/search.../i);

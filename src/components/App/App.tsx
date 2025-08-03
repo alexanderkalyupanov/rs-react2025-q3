@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { Character } from '../cardItem/CardItem';
 import ErrorBoundary from '../errorBoundary/errorBoundary';
 import Main from '../main/main';
 import Header from '../header/header';
@@ -8,14 +7,8 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import About from '../About/About';
 import NotFoundPage from '../NotFound/NotFoundComponent';
 import CharacterDetails from '../CharacterDetails/СharacterDetails';
-
-// interface AppState {
-//   characters: Array<Character>;
-//   loading: boolean;
-//   error: string | null;
-//   lastSearch: string;
-//   shouldThrow: boolean;
-// }
+import SelectedItemsPanel from '../SelectedItemsPanel/SelectedItemsPanel';
+import type { Character } from '../cardItem/CardItem';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -44,13 +37,13 @@ function App() {
       setLoading(true);
       setError(null);
       const { data, error, info } = await fetchCharacters(query, page);
-
       if (error) {
         setError(error);
         setCharacters([]);
         setTotalPage(0);
       } else {
-        setCharacters(data || []);
+        const charactersData = data || [];
+        setCharacters(charactersData);
         setTotalPage(info?.pages || 0);
       }
       setLoading(false);
@@ -75,7 +68,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="bg-violet-600 min-h-screen">
+      <div className="bg-violet-600 min-h-screen dark:bg-violet-900">
         <Header
           isLoading={loading}
           searchQuery={lastSearch}
@@ -85,15 +78,18 @@ function App() {
           <Route
             path="/"
             element={
-              <Main
-                characters={characters}
-                error={error}
-                isLoading={loading}
-                shouldThrow={shouldThrow}
-                currentPage={currentPage}
-                totalPages={totalPage}
-                searchQuery={lastSearch}
-              ></Main>
+              <>
+                <Main
+                  characters={characters}
+                  error={error}
+                  isLoading={loading}
+                  shouldThrow={shouldThrow}
+                  currentPage={currentPage}
+                  totalPages={totalPage}
+                  searchQuery={lastSearch}
+                ></Main>
+                <SelectedItemsPanel></SelectedItemsPanel>
+              </>
             }
           >
             <Route

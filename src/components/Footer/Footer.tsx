@@ -14,11 +14,11 @@ function Footer() {
       >
         <img className="w-40" src={logo} alt="rs-logo" />
       </a>
-      <span className="text-xl">2025</span>
+      <span className="text-xl dark:text-zinc-50">2025</span>
       <a
         href="https://github.com/alexanderkalyupanov"
         target="_blank"
-        className="flex gap-2 items-center"
+        className="flex gap-2 items-center dark:text-zinc-50"
         rel="noreferrer"
       >
         alexanderkalyupanov

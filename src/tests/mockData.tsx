@@ -1,4 +1,11 @@
+import { configureStore } from '@reduxjs/toolkit';
 import type { Character } from '../components/cardItem/CardItem';
+import charactersSlice, {
+  type charactersState,
+} from '../store/charactersSlice';
+import selectedItemsSlice, {
+  type SelectedItemsState,
+} from '../store/selectedItemsSlice';
 
 const mockCharacters: Character[] = [
   {
@@ -78,4 +85,30 @@ const emptyCharacter: Character = {
   created: '',
 };
 
-export { mockCharacter, mockCharacters, emptyCharacter };
+interface AppState {
+  selectedItems: SelectedItemsState;
+  characters: charactersState;
+}
+
+const createMockStore = (preloadedState: AppState) => {
+  return configureStore({
+    reducer: {
+      selectedItems: selectedItemsSlice,
+      characters: charactersSlice,
+    },
+    preloadedState,
+  });
+};
+
+const mockStore = createMockStore({
+  selectedItems: { selectedCharacters: [] },
+  characters: { selectedCharactersData: [] },
+});
+
+export {
+  mockCharacter,
+  mockCharacters,
+  emptyCharacter,
+  createMockStore,
+  mockStore,
+};

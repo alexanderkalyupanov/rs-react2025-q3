@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocalStorage } from '../../useLocalStorage/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface SearchProps {
   searchQuery: string;
@@ -38,7 +38,7 @@ function SearchComponent({ searchQuery = '', onSearch }: SearchProps) {
         />
         <button
           type="submit"
-          className="bg-purple-300 p-2 rounded w-25 cursor-pointer hover:bg-purple-500 transition-colors whitespace-nowrap sm:w-40 "
+          className="bg-purple-300 p-2 rounded w-25 cursor-pointer hover:bg-purple-500 transition-colors whitespace-nowrap sm:w-40 dark:text-purple-50"
         >
           Search
         </button>

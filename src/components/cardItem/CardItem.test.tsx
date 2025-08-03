@@ -2,15 +2,18 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CardItem from './CardItem';
 import { describe, test, expect } from 'vitest';
-import { emptyCharacter, mockCharacter } from '../../tests/mockData';
+import { emptyCharacter, mockCharacter, mockStore } from '../../tests/mockData';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
 
 describe('CardItem tests', () => {
   test('render name and description character', () => {
     render(
-      <MemoryRouter>
-        <CardItem character={mockCharacter} />
-      </MemoryRouter>
+      <Provider store={mockStore}>
+        <MemoryRouter>
+          <CardItem character={mockCharacter} />
+        </MemoryRouter>
+      </Provider>
     );
 
     const card = screen.getByTestId('character-card');
@@ -35,9 +38,11 @@ describe('CardItem tests', () => {
 
   test('missing props characters', () => {
     render(
-      <MemoryRouter>
-        <CardItem character={emptyCharacter} />
-      </MemoryRouter>
+      <Provider store={mockStore}>
+        <MemoryRouter>
+          <CardItem character={emptyCharacter} />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByTestId('character-card')).toBeInTheDocument();
