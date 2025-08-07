@@ -49,6 +49,7 @@ function App() {
           isLoading={isLoading}
           searchQuery={lastSearch}
           onSearch={handleSearch}
+          currentPage={currentPage}
         ></Header>
         <Routes>
           <Route
