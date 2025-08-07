@@ -7,8 +7,6 @@ import { useState } from 'react';
 interface MainProps {
   characters: Character[];
   isLoading: boolean;
-  error: string | null;
-  shouldThrow: boolean;
   currentPage: number;
   totalPages: number;
   searchQuery: string;
@@ -17,8 +15,6 @@ interface MainProps {
 function Main({
   characters,
   isLoading,
-  error,
-  shouldThrow,
   currentPage,
   totalPages,
   searchQuery,
@@ -47,9 +43,7 @@ function Main({
       >
         <CardList
           characters={characters}
-          error={error}
           isLoading={isLoading}
-          shouldThrow={shouldThrow}
           currentPage={currentPage}
           totalPages={totalPages}
           searchQuery={searchQuery}

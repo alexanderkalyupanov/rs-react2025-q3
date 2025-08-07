@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import * as api from '../../services/service';
+// import * as api from '../../services/service';
 import CharacterDetails from './СharacterDetails';
 import '@testing-library/jest-dom/vitest';
 
@@ -15,9 +15,9 @@ describe('CharacterDetails', () => {
   });
 
   it('show spinner', () => {
-    vi.mocked(api.fetchCharacterById).mockImplementation(
-      () => new Promise(() => {})
-    );
+    // vi.mocked(api.fetchCharacterById).mockImplementation(
+    //   () => new Promise(() => { })
+    // );
 
     render(
       <MemoryRouter initialEntries={['/characters/1']}>

@@ -1,39 +1,25 @@
 import { useNavigate, useParams } from 'react-router';
-import type { Character } from '../cardItem/CardItem';
-import { useEffect, useState } from 'react';
-import { fetchCharacterById } from '../../services/service';
 import Spinner from '../Spinner/Spinner';
+import { charactersApi } from '../../services/service';
+import { isApiError } from '../../utils';
 
 function CharacterDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [character, setCharacter] = useState<Character | null>(null);
 
-  useEffect(() => {
-    const loadCharacter = async () => {
-      try {
-        setLoading(true);
-        if (id) {
-          const data = await fetchCharacterById(Number(id));
-          setCharacter(data);
-        }
-      } catch {
-        setError('Failed to fetch character');
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadCharacter();
-  }, [id]);
+  const {
+    data: character,
+    isFetching,
+    error,
+  } = charactersApi.useGetCharacterByIdQuery(Number(id));
 
-  if (loading) {
+  if (isFetching) {
     return <Spinner></Spinner>;
   }
 
   if (error) {
-    return <div className="text-center text-red-500 p-4">{error}</div>;
+    const errorMessage = isApiError(error) ? error.error : 'Unknown error';
+    return <div className="text-center text-red-500 p-4">{errorMessage}</div>;
   }
 
   if (!character) {

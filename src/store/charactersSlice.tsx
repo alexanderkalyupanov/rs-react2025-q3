@@ -19,7 +19,7 @@ interface Character {
   url: string;
   created: string;
 }
-interface charactersState {
+export interface charactersState {
   selectedCharactersData: Character[];
 }
 
