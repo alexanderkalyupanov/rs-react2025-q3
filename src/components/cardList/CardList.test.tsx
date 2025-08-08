@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import CardList from './CardList';
-import { describe, test, expect, vi } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import '@testing-library/jest-dom';
 import { mockCharacters, mockStore } from '../../tests/mockData';
 import { MemoryRouter } from 'react-router';
@@ -20,8 +20,6 @@ describe('CardList Component', () => {
             <CardList
               characters={mockCharacters}
               isLoading={false}
-              error={null}
-              shouldThrow={false}
               {...defaultProps}
             ></CardList>
           </MemoryRouter>
@@ -38,8 +36,6 @@ describe('CardList Component', () => {
             <CardList
               characters={[]}
               isLoading={false}
-              error={null}
-              shouldThrow={false}
               {...defaultProps}
             ></CardList>
           </MemoryRouter>
@@ -55,8 +51,6 @@ describe('CardList Component', () => {
             <CardList
               characters={[]}
               isLoading={true}
-              error={null}
-              shouldThrow={false}
               {...defaultProps}
             ></CardList>
           </MemoryRouter>
@@ -72,8 +66,6 @@ describe('CardList Component', () => {
             <CardList
               characters={[]}
               isLoading={false}
-              error={null}
-              shouldThrow={false}
               {...defaultProps}
             ></CardList>
           </MemoryRouter>
@@ -92,8 +84,6 @@ describe('CardList Component', () => {
             <CardList
               characters={mockCharacters}
               isLoading={false}
-              error={null}
-              shouldThrow={false}
               {...defaultProps}
             ></CardList>
           </MemoryRouter>
@@ -124,8 +114,6 @@ describe('CardList Component', () => {
             <CardList
               characters={[misCharacter]}
               isLoading={false}
-              error={null}
-              shouldThrow={false}
               {...defaultProps}
             ></CardList>
           </MemoryRouter>
@@ -135,47 +123,22 @@ describe('CardList Component', () => {
     });
   });
 
-  describe('error tests', () => {
-    test('display error message', () => {
-      const errorMessage = 'Failed to fetch characters';
-      render(
-        <Provider store={mockStore}>
-          <MemoryRouter>
-            <CardList
-              characters={[]}
-              isLoading={false}
-              error={errorMessage}
-              shouldThrow={false}
-              {...defaultProps}
-            ></CardList>
-          </MemoryRouter>
-        </Provider>
-      );
-      expect(screen.getByText(errorMessage)).toBeInTheDocument();
-      expect(screen.getByText(errorMessage)).toHaveClass('text-red-500');
-    });
-  });
-
-  describe('Error boundary trigger', () => {
-    test('throws error when shouldThrow is true', () => {
-      const originalError = console.error;
-      console.error = vi.fn();
-      expect(() =>
-        render(
-          <Provider store={mockStore}>
-            <MemoryRouter>
-              <CardList
-                characters={mockCharacters}
-                isLoading={false}
-                error={null}
-                shouldThrow={true}
-                {...defaultProps}
-              />
-            </MemoryRouter>
-          </Provider>
-        )
-      ).toThrow('Test error triggered by button');
-      console.error = originalError;
-    });
-  });
+  // describe('error tests', () => {
+  //   test('display error message', () => {
+  //     const errorMessage = 'Failed to fetch characters';
+  //     render(
+  //       <Provider store={mockStore}>
+  //         <MemoryRouter>
+  //           <CardList
+  //             characters={[]}
+  //             isLoading={false}
+  //             {...defaultProps}
+  //           ></CardList>
+  //         </MemoryRouter>
+  //       </Provider>
+  //     );
+  //     expect(screen.getByText(errorMessage)).toBeInTheDocument();
+  //     expect(screen.getByText(errorMessage)).toHaveClass('text-red-500');
+  //   });
+  // });
 });

@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "prepare": "cd .. && husky rs-react2025-q3/.husky",
     "test": "vitest",
-    "test:coverage": "vitest -- --coverage"
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",

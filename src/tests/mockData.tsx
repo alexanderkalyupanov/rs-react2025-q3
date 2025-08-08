@@ -6,6 +6,7 @@ import charactersSlice, {
 import selectedItemsSlice, {
   type SelectedItemsState,
 } from '../store/selectedItemsSlice';
+import { charactersApi } from '../services/service';
 
 const mockCharacters: Character[] = [
   {
@@ -85,22 +86,27 @@ const emptyCharacter: Character = {
   created: '',
 };
 
-interface AppState {
+export interface AppState {
   selectedItems: SelectedItemsState;
   characters: charactersState;
 }
+
+type MockStoreType = ReturnType<typeof createMockStore>;
 
 const createMockStore = (preloadedState: AppState) => {
   return configureStore({
     reducer: {
       selectedItems: selectedItemsSlice,
       characters: charactersSlice,
+      [charactersApi.reducerPath]: charactersApi.reducer,
     },
     preloadedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(charactersApi.middleware),
   });
 };
 
-const mockStore = createMockStore({
+const mockStore: MockStoreType = createMockStore({
   selectedItems: { selectedCharacters: [] },
   characters: { selectedCharactersData: [] },
 });

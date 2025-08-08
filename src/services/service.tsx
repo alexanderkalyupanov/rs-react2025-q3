@@ -14,6 +14,34 @@ interface ApiResponse {
   };
 }
 
+const handleErrorResponse = (response: {
+  status: number;
+  data?: { error: string };
+}) => {
+  const status = response.status;
+  let errorMessage = `${status}: `;
+
+  switch (status) {
+    case 404:
+      errorMessage += 'Characters not found!';
+      break;
+    case 500:
+      errorMessage += 'Server error, please try later!';
+      break;
+    case 400:
+      errorMessage += 'Invalid request!';
+      break;
+    default:
+      errorMessage += 'Unknown error';
+      break;
+  }
+
+  return {
+    status,
+    error: errorMessage,
+  };
+};
+
 export const charactersApi = createApi({
   reducerPath: 'rickmortyApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
@@ -42,65 +70,13 @@ export const charactersApi = createApi({
         error: null,
         info: response.info,
       }),
-      transformErrorResponse: (response: {
-        status: number;
-        data?: { error: string };
-      }) => {
-        const status = response.status;
-        let errorMessage = `${status}: `;
-
-        switch (status) {
-          case 404:
-            errorMessage += 'Characters not found!';
-            break;
-          case 500:
-            errorMessage += 'Server error, please try later!';
-            break;
-          case 400:
-            errorMessage += 'Invalid request!';
-            break;
-          default:
-            errorMessage += 'Unknown error';
-            break;
-        }
-
-        return {
-          status,
-          error: errorMessage,
-        };
-      },
+      transformErrorResponse: handleErrorResponse,
     }),
     getCharacterById: build.query<Character, number>({
       query: (id) => ({
         url: `/${id}`,
       }),
-      transformErrorResponse: (response: {
-        status: number;
-        data?: { error: string };
-      }) => {
-        const status = response.status;
-        let errorMessage = `${status}: `;
-
-        switch (status) {
-          case 404:
-            errorMessage += 'Characters not found!';
-            break;
-          case 500:
-            errorMessage += 'Server error, please try later!';
-            break;
-          case 400:
-            errorMessage += 'Invalid request!';
-            break;
-          default:
-            errorMessage += 'Unknown error';
-            break;
-        }
-
-        return {
-          status,
-          error: errorMessage,
-        };
-      },
+      transformErrorResponse: handleErrorResponse,
     }),
   }),
 });
