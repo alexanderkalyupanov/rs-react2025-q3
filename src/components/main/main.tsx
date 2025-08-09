@@ -2,25 +2,22 @@ import { Outlet, useLocation } from 'react-router';
 import Pagination from '../Pagination/Pagination';
 import type { Character } from '../cardItem/CardItem';
 import CardList from '../cardList/CardList';
+import { charactersApi } from '../../services/service';
 
 interface MainProps {
   characters: Character[];
-  isLoading: boolean;
   currentPage: number;
   totalPages: number;
   searchQuery: string;
 }
 
-function Main({
-  characters,
-  isLoading,
-  currentPage,
-  totalPages,
-  searchQuery,
-}: MainProps) {
+function Main({ characters, currentPage, totalPages, searchQuery }: MainProps) {
   const location = useLocation();
   const isCharacterRoute = location.pathname.includes('/character/');
-
+  const { isFetching } = charactersApi.useGetCharactersQuery({
+    query: searchQuery,
+    page: currentPage,
+  });
   return (
     <div className="flex min-h-screen">
       <div
@@ -28,10 +25,10 @@ function Main({
       >
         <CardList
           characters={characters}
-          isLoading={isLoading}
           currentPage={currentPage}
           totalPages={totalPages}
           searchQuery={searchQuery}
+          isLoading={isFetching}
         />
         <Pagination
           currentPage={currentPage}

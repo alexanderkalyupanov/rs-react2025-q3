@@ -6,17 +6,17 @@ import CardItem from '../cardItem/CardItem';
 
 interface ResultsProps {
   characters: Character[];
-  isLoading: boolean;
   currentPage: number;
+  isLoading: boolean;
   totalPages: number;
   searchQuery: string;
 }
 
 function CardList({
   characters,
-  isLoading,
   currentPage,
   searchQuery,
+  isLoading,
 }: ResultsProps) {
   const { error } = charactersApi.useGetCharactersQuery({
     query: searchQuery,

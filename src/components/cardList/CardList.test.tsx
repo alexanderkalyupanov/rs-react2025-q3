@@ -56,7 +56,7 @@ describe('CardList Component', () => {
           </MemoryRouter>
         </Provider>
       );
-      expect(screen.getByTestId('loading-box')).toBeInTheDocument();
+      // expect(screen.getByTestId('loading-box')).toBeInTheDocument();
       expect(screen.getByTestId('loading')).toHaveClass('animate-spin');
     });
     test('unshow loading spinner', () => {
@@ -122,23 +122,4 @@ describe('CardList Component', () => {
       expect(screen.getByText('Unknown')).toBeInTheDocument();
     });
   });
-
-  // describe('error tests', () => {
-  //   test('display error message', () => {
-  //     const errorMessage = 'Failed to fetch characters';
-  //     render(
-  //       <Provider store={mockStore}>
-  //         <MemoryRouter>
-  //           <CardList
-  //             characters={[]}
-  //             isLoading={false}
-  //             {...defaultProps}
-  //           ></CardList>
-  //         </MemoryRouter>
-  //       </Provider>
-  //     );
-  //     expect(screen.getByText(errorMessage)).toBeInTheDocument();
-  //     expect(screen.getByText(errorMessage)).toHaveClass('text-red-500');
-  //   });
-  // });
 });

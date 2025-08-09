@@ -54,24 +54,6 @@ describe('App component', () => {
     });
   });
 
-  // it('should show error when fetch fails', async () => {
-  //   store.dispatch(
-  //     charactersApi.endpoints.getCharacters.initiate({ query: 'jfjfjfjfjjfjd', page: 1 })
-  //   );
-
-  //   render(
-  //     <BrowserRouter>
-  //       <Provider store={store}>
-  //         <App />
-  //       </Provider>
-  //     </BrowserRouter>
-  //   );
-
-  //   await waitFor(() => {
-  //     expect(screen.queryByTestId('character-list')).not.toBeInTheDocument();
-  //   });
-  // });
-
   it('should have search query in localstorage', async () => {
     render(
       <BrowserRouter>

@@ -11,7 +11,7 @@ import SelectedItemsPanel from '../SelectedItemsPanel/SelectedItemsPanel';
 
 function App() {
   const [lastSearch, setLastSearch] = useState(
-    localStorage.getItem('lastSearch') || ''
+    () => localStorage.getItem('lastSearch') || ''
   );
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -19,7 +19,7 @@ function App() {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
 
-  const { data, isLoading, isFetching } = charactersApi.useGetCharactersQuery({
+  const { data, isLoading } = charactersApi.useGetCharactersQuery({
     query: lastSearch,
     page: currentPage,
   });
@@ -58,22 +58,18 @@ function App() {
               <>
                 <Main
                   characters={characters || []}
-                  isLoading={isFetching}
                   currentPage={currentPage}
                   totalPages={totalPages}
                   searchQuery={lastSearch}
                 ></Main>
-                <SelectedItemsPanel></SelectedItemsPanel>
+                <SelectedItemsPanel />
               </>
             }
           >
-            <Route
-              path="character/:id"
-              element={<CharacterDetails></CharacterDetails>}
-            ></Route>
+            <Route path="character/:id" element={<CharacterDetails />}></Route>
           </Route>
-          <Route path="/about" element={<About></About>}></Route>
-          <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="*" element={<NotFoundPage />}></Route>
         </Routes>
       </div>
     </ErrorBoundary>
