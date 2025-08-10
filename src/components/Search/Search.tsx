@@ -10,6 +10,7 @@ interface SearchProps {
 function SearchComponent({ searchQuery = '', onSearch }: SearchProps) {
   const [query, setQuery] = useState(searchQuery);
   const [, setData] = useLocalStorage('searchQuery', '');
+
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setQuery(e.target.value);
   }

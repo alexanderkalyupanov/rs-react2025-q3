@@ -1,58 +1,34 @@
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import Pagination from '../Pagination/Pagination';
 import type { Character } from '../cardItem/CardItem';
 import CardList from '../cardList/CardList';
-import { useState } from 'react';
+import { charactersApi } from '../../services/service';
 
 interface MainProps {
   characters: Character[];
-  isLoading: boolean;
-  error: string | null;
-  shouldThrow: boolean;
   currentPage: number;
   totalPages: number;
   searchQuery: string;
 }
 
-function Main({
-  characters,
-  isLoading,
-  error,
-  shouldThrow,
-  currentPage,
-  totalPages,
-  searchQuery,
-}: MainProps) {
-  const [isOpenPanel, setIsOpenPanel] = useState(false);
+function Main({ characters, currentPage, totalPages, searchQuery }: MainProps) {
   const location = useLocation();
-  const navigate = useNavigate();
   const isCharacterRoute = location.pathname.includes('/character/');
-
-  const handleClosePanel = () => {
-    navigate('/');
-    setIsOpenPanel(false);
-  };
-
-  const handleMainClick = () => {
-    if (isOpenPanel) {
-      handleClosePanel();
-    }
-  };
-
+  const { isFetching } = charactersApi.useGetCharactersQuery({
+    query: searchQuery,
+    page: currentPage,
+  });
   return (
     <div className="flex min-h-screen">
       <div
         className={`${isCharacterRoute ? 'w-2/3' : 'w-full'} p-5 overflow-y-auto`}
-        onClick={handleMainClick}
       >
         <CardList
           characters={characters}
-          error={error}
-          isLoading={isLoading}
-          shouldThrow={shouldThrow}
           currentPage={currentPage}
           totalPages={totalPages}
           searchQuery={searchQuery}
+          isLoading={isFetching}
         />
         <Pagination
           currentPage={currentPage}

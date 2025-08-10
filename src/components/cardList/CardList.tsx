@@ -1,28 +1,35 @@
+import { charactersApi } from '../../services/service';
+import { isApiError } from '../../utils';
 import Spinner from '../Spinner/Spinner';
 import type { Character } from '../cardItem/CardItem';
 import CardItem from '../cardItem/CardItem';
 
 interface ResultsProps {
   characters: Character[];
-  isLoading: boolean;
-  error: string | null;
-  shouldThrow: boolean;
   currentPage: number;
+  isLoading: boolean;
   totalPages: number;
   searchQuery: string;
 }
 
-function CardList({ characters, isLoading, error, shouldThrow }: ResultsProps) {
-  if (shouldThrow) {
-    throw new Error('Test error triggered by button');
-  }
+function CardList({
+  characters,
+  currentPage,
+  searchQuery,
+  isLoading,
+}: ResultsProps) {
+  const { error } = charactersApi.useGetCharactersQuery({
+    query: searchQuery,
+    page: currentPage,
+  });
 
   if (isLoading) {
     return <Spinner></Spinner>;
   }
 
   if (error) {
-    return <div className="text-center text-red-500 p-4">{error}</div>;
+    const errorMessage = isApiError(error) ? error.error : 'Unknown error';
+    return <div className="text-center text-red-500 p-4">{errorMessage}</div>;
   }
 
   if (characters.length === 0) {

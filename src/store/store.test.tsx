@@ -8,10 +8,10 @@ import {
 describe('Redux Store', () => {
   it('should initialize with correct state structure', () => {
     const state = store.getState();
-    expect(state).toEqual({
-      selectedItems: { selectedCharacters: [] },
-      characters: { selectedCharactersData: [] },
-    });
+    expect(state.selectedItems).toEqual({ selectedCharacters: [] });
+    expect(state.characters).toEqual({ selectedCharactersData: [] });
+
+    expect(state).toHaveProperty('rickmortyApi');
   });
 
   it('should handle selectedItems actions', () => {

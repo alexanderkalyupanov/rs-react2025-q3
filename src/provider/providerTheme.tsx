@@ -7,7 +7,7 @@ interface ThemeProviderChild {
   children: ReactNode;
 }
 
-interface ThemeContextType {
+export interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }

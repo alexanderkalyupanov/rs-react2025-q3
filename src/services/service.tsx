@@ -1,4 +1,5 @@
 import type { Character } from '../components/cardItem/CardItem';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const API_BASE_URL = 'https://rickandmortyapi.com/api/character';
 
@@ -13,63 +14,69 @@ interface ApiResponse {
   };
 }
 
-export const fetchCharacters = async (
-  query: string = '',
-  page: number = 1
-): Promise<{
-  data: Character[] | null;
-  error: string | null;
-  info?: {
-    count: number;
-    pages: number;
-    next: string | null;
-    prev: string | null;
-  };
-}> => {
-  try {
-    const url = query
-      ? `${API_BASE_URL}/?name=${encodeURIComponent(query)}&page=${page}`
-      : `${API_BASE_URL}/?page=${page}`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      let errorMessage = `Error ${response.status}: `;
+const handleErrorResponse = (response: {
+  status: number;
+  data?: { error: string };
+}) => {
+  const status = response.status;
+  let errorMessage = `${status}: `;
 
-      switch (response.status) {
-        case 404:
-          errorMessage += 'Characters not found';
-          break;
-        case 400:
-          errorMessage += 'Invalid request';
-          break;
-        case 500:
-          errorMessage += 'Server error';
-          break;
-        default:
-          errorMessage += errorData?.error || 'Failed to fetch characters';
-      }
-      throw new Error(errorMessage);
-    }
-    const data: ApiResponse = await response.json();
-    return {
-      data: data.results || [],
-      error: null,
-      info: data.info,
-    };
-  } catch (error) {
-    return {
-      data: null,
-      error: error instanceof Error ? error.message : 'Unknown error...',
-    };
+  switch (status) {
+    case 404:
+      errorMessage += 'Characters not found!';
+      break;
+    case 500:
+      errorMessage += 'Server error, please try later!';
+      break;
+    case 400:
+      errorMessage += 'Invalid request!';
+      break;
+    default:
+      errorMessage += 'Unknown error';
+      break;
   }
+
+  return {
+    status,
+    error: errorMessage,
+  };
 };
 
-export async function fetchCharacterById(id: number): Promise<Character> {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character/${id}`
-  );
-  if (!response.ok) {
-    throw new Error('Character not found');
-  }
-  return response.json();
-}
+export const charactersApi = createApi({
+  reducerPath: 'rickmortyApi',
+  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
+  endpoints: (build) => ({
+    getCharacters: build.query<
+      {
+        data: Character[] | null;
+        error: string | null;
+        info?: ApiResponse['info'];
+      },
+      { query?: string; page?: number }
+    >({
+      query: ({ query = '', page = 1 }) => {
+        const params = new URLSearchParams();
+        if (query) {
+          params.append('name', query);
+        }
+        params.append('page', page.toString());
+        return {
+          url: '',
+          params,
+        };
+      },
+      transformResponse: (response: ApiResponse) => ({
+        data: response.results || null,
+        error: null,
+        info: response.info,
+      }),
+      transformErrorResponse: handleErrorResponse,
+    }),
+    getCharacterById: build.query<Character, number>({
+      query: (id) => ({
+        url: `/${id}`,
+      }),
+      transformErrorResponse: handleErrorResponse,
+    }),
+  }),
+});
