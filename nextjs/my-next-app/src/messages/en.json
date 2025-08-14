@@ -1,0 +1,23 @@
+{
+  "About": {
+    "name": "Alexander Kalyupanov",
+    "position": "Frontend Developer",
+    "github": "Github:"
+  },
+  "Header": {
+    "title": "Rick & Morty",
+    "refetch": "Refetch",
+    "about": "About",
+    "dark theme": "Dark",
+    "light theme": "Light"
+  },
+  "Search": {
+    "search-input": "Search...",
+    "search-btn": "Search"
+  },
+  "CardItem": {
+    "species": "Species:",
+    "gender": "Gender:",
+    "status": "Status:"
+  }
+}
