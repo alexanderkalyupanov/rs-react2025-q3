@@ -7,6 +7,7 @@ import { charactersApi } from '@/services/service';
 import ErrorBoundary from '@/components/errorBoundary/errorBoundary';
 import Header from '@/components/header/header';
 import Main from '@/components/main/main';
+import SelectedItemsPanel from '@/components/SelectedItemsPanel/SelectedItemsPanel';
 
 function App() {
   const router = useRouter();
@@ -56,7 +57,7 @@ function App() {
           totalPages={totalPages}
           searchQuery={lastSearch}
         ></Main>
-        {/* <SelectedItemsPanel /> */}
+        <SelectedItemsPanel />
       </div>
     </ErrorBoundary>
   );

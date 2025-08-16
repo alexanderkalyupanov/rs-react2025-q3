@@ -1,3 +1,5 @@
+"use client"
+
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
 import { clearAllSelected } from '../../store/selectedItemsSlice';
@@ -14,23 +16,29 @@ function SelectedItemsPanel() {
     (state: RootState) => state.characters.selectedCharactersData
   );
 
-  const handleDownload = useCallback(() => {
+  const handleDownload = useCallback(async () => {
     if (selectedIds.length === 0) return;
-    const headers = 'Name,Species,Gender,Status,Origin\n';
-    const csvRows = selectedCharacters.map(
-      (character) =>
-        `"${character.name.replace(/"/g, '""')}","${character.species}","${character.gender}","${character.status}","${character.origin.name}"`
-    );
-    const csvContent = headers + csvRows.join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
+    try {
+      const response = await fetch('/api/export-csv', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ selectedCharacters }),
+      })
 
-    if (downloandLink.current) {
-      downloandLink.current.href = url;
-      downloandLink.current.download = `${selectedIds.length}_characters.csv`;
-      downloandLink.current.click();
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
 
-      setTimeout(() => URL.revokeObjectURL(url), 100);
+      if (downloandLink.current) {
+        downloandLink.current.href = url;
+        downloandLink.current.download = `${selectedIds.length}_characters.csv`;
+        downloandLink.current.click();
+
+        setTimeout(() => URL.revokeObjectURL(url), 100);
+      }
+    } catch (error) {
+      console.error('Download error:', error);
     }
   }, [selectedCharacters, selectedIds.length]);
 

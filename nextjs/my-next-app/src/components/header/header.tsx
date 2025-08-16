@@ -2,13 +2,11 @@
 
 import { useContext } from 'react';
 import SearchComponent from '../Search/Search';
-import { charactersApi } from '../../services/service';
 import { ThemeContext } from '../themeProvider/themeProvider';
 import LanguageSwitcher from '../languageSwitcher/languageSwitcher';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { charactersApi } from '@/services/service';
 interface HeaderProps {
   isLoading: boolean;
   searchQuery: string;
