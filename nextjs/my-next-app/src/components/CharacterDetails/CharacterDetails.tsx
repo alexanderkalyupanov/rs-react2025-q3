@@ -1,3 +1,5 @@
+'use client';
+
 import Spinner from '@/components/Spinner/Spinner';
 import { charactersApi } from '@/services/service';
 import { isApiError } from '@/utils/utils';
@@ -7,7 +9,6 @@ import { useRouter } from 'next/router';
 
 function CharacterDetails({ id }: { id: string }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const {
     data: character,
@@ -31,11 +32,7 @@ function CharacterDetails({ id }: { id: string }) {
   }
 
   const handleClose = () => {
-    const page = searchParams.get('page') || '1';
-    router.push({
-      pathname: '/',
-      search: `?page=${page}`,
-    });
+    router.back();
   };
 
   return (

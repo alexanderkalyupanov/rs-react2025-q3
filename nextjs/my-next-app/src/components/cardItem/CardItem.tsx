@@ -1,3 +1,5 @@
+'use client';
+
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
 import { type ChangeEvent } from 'react';
@@ -6,10 +8,11 @@ import {
   addSelectedCharacterData,
   removeSelectedCharacterData,
 } from '../../store/charactersSlice';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation';
+import { Link } from '@/i18n/navigation';
+import { stat } from 'fs';
 
 export interface Character {
   id: number;

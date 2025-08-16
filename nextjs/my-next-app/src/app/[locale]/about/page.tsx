@@ -2,6 +2,7 @@
 
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/header/header';
+import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image'
 function About() {
@@ -9,6 +10,7 @@ function About() {
 
   return (
     <>
+
       <div className="flex bg-violet-600  min-h-screen flex-col">
         <Header isLoading={false} searchQuery='' onSearch={() => { }} currentPage={1} />
         <div
@@ -24,13 +26,11 @@ function About() {
             </p>
             <span className="text-xl dark:text-zinc-50">
               {translate('github')}{' '}
-              <a
+              <Link
                 href="https://github.com/alexanderkalyupanov"
-                target="_blank"
-                rel="noreferrer"
               >
                 alexanderkalyupanov
-              </a>
+              </Link>
             </span>
           </div>
           <Image

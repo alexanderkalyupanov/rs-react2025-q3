@@ -5,6 +5,7 @@ import type { Character } from '../cardItem/CardItem';
 import CardList from '../cardList/CardList';
 import { charactersApi } from '../../services/service';
 import { usePathname, useSearchParams } from 'next/navigation';
+import CharacterDetails from '../CharacterDetails/CharacterDetails';
 
 interface MainProps {
   characters: Character[];
@@ -39,13 +40,6 @@ function Main({ characters, currentPage, totalPages, searchQuery }: MainProps) {
           searchQuery={searchQuery}
         />
       </div>
-      {characterId && (
-        <div className="fixed inset-y-0 right-0 w-1/3 border-l border-gray-300 shadow-lg z-10 top-22">
-          <div className="h-full overflow-y-auto pt-12">
-
-          </div>
-        </div>
-      )}
     </div>
   );
 }

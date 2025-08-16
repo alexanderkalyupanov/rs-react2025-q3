@@ -1,4 +1,5 @@
 import Link from "next/link";
+import '../app/globals.css'
 
 function NotFoundPage() {
   return (
@@ -8,12 +9,12 @@ function NotFoundPage() {
       <p className="text-xl mb-8 text-center max-w-md">
         Oops! The page you are looking for doesnt exist or has been moved.
       </p>
-      {/* <Link
-        to="/"
+      <Link
+        href="/"
         className="px-6 py-3 bg-white text-violet-600 rounded-lg font-medium hover:bg-gray-100 transition-colors"
       >
         Go to Main
-      </Link> */}
+      </Link>
     </div>
   );
 }

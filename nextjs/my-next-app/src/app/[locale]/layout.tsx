@@ -10,11 +10,11 @@ export async function generateStaticParams() {
 export default async function LocaleLayout({
   children,
   params,
-  character
+  modal
 }: {
   children: React.ReactNode;
   params: { locale: string };
-  character: React.ReactNode
+  modal: React.ReactNode
 }) {
   const { locale } = params;
 
@@ -31,11 +31,10 @@ export default async function LocaleLayout({
         <ReduxProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
-            {character}
+            {modal}
           </NextIntlClientProvider>
         </ReduxProvider>
-
       </body>
-    </html>
+    </html >
   );
 }
