@@ -1,0 +1,23 @@
+{
+  "About": {
+    "name": "Александр Калюпанов",
+    "position": "Фронтенд-разработчик",
+    "github": "Гитхаб:"
+  },
+  "Header": {
+    "title": "Рик & Морти",
+    "refetch": "Перезагрузка",
+    "about": "Обо мне",
+    "dark theme": "Тёмная тема",
+    "light theme": "Светлая тема"
+  },
+  "Search": {
+    "search-input": "Поиск...",
+    "search-btn": "Найти"
+  },
+  "CardItem": {
+    "species": "Вид:",
+    "gender": "Пол:",
+    "status": "Статус:"
+  }
+}
