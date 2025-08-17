@@ -9,10 +9,9 @@ import {
   removeSelectedCharacterData,
 } from '../../store/charactersSlice';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image'
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
-import { stat } from 'fs';
 
 export interface Character {
   id: number;
@@ -83,15 +82,21 @@ function CardItem({ character }: CardItemProps) {
         <div className="pl-3 pt-2">
           <h3 className="text-pink-300 dark:text-zinc-50">{character.name}</h3>
           <p className="text-rose-100 ">
-            <span className="text-pink-200 dark:text-zinc-50">{translate('species')} </span>
+            <span className="text-pink-200 dark:text-zinc-50">
+              {translate('species')}{' '}
+            </span>
             {character.species}
           </p>
           <p className="text-rose-100">
-            <span className="text-pink-200 dark:text-zinc-50 ">{translate('gender')}</span>{' '}
+            <span className="text-pink-200 dark:text-zinc-50 ">
+              {translate('gender')}
+            </span>{' '}
             {character.gender}
           </p>
           <p className="text-rose-100">
-            <span className="text-pink-200 dark:text-zinc-50">{translate('status')}</span>{' '}
+            <span className="text-pink-200 dark:text-zinc-50">
+              {translate('status')}
+            </span>{' '}
             {character.status}
           </p>
           <div className="flex">

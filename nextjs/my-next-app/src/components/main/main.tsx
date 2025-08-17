@@ -1,11 +1,10 @@
-'use client'
+'use client';
 
 import Pagination from '../Pagination/Pagination';
 import type { Character } from '../cardItem/CardItem';
 import CardList from '../cardList/CardList';
 import { charactersApi } from '../../services/service';
-import { usePathname, useSearchParams } from 'next/navigation';
-import CharacterDetails from '../CharacterDetails/CharacterDetails';
+import { useSearchParams } from 'next/navigation';
 
 interface MainProps {
   characters: Character[];
@@ -15,7 +14,6 @@ interface MainProps {
 }
 
 function Main({ characters, currentPage, totalPages, searchQuery }: MainProps) {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const characterId = searchParams.get('character');
   const { isFetching } = charactersApi.useGetCharactersQuery({

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { createContext, useEffect, type ReactNode } from 'react';
@@ -16,7 +16,7 @@ export interface ThemeContextType {
 
 export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
-  setTheme: () => { },
+  setTheme: () => {},
 });
 
 export const ThemeProvider = ({ children }: ThemeProviderChild) => {

@@ -1,18 +1,22 @@
-'use client'
+'use client';
 
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/header/header';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image'
+import Image from 'next/image';
 function About() {
   const translate = useTranslations('About');
 
   return (
     <>
-
       <div className="flex bg-violet-600  min-h-screen flex-col">
-        <Header isLoading={false} searchQuery='' onSearch={() => { }} currentPage={1} />
+        <Header
+          isLoading={false}
+          searchQuery=""
+          onSearch={() => {}}
+          currentPage={1}
+        />
         <div
           data-testid="about-container"
           className="about flex flex-col md:flex-row justify-center m-auto items-center gap-5 border-solid border-4 border-purple-500 rounded-3xl p-4 md:pl-2 w-full md:w-[700px] mb-10 md:mb-[63px] mt-6 md:mt-[25px]"
@@ -26,15 +30,13 @@ function About() {
             </p>
             <span className="text-xl dark:text-zinc-50">
               {translate('github')}{' '}
-              <Link
-                href="https://github.com/alexanderkalyupanov"
-              >
+              <Link href="https://github.com/alexanderkalyupanov">
                 alexanderkalyupanov
               </Link>
             </span>
           </div>
           <Image
-            src='/images/my-photo.png'
+            src="/images/my-photo.png"
             alt="developer image"
             width={360}
             height={360}
@@ -45,7 +47,6 @@ function About() {
         <Footer></Footer>
       </div>
     </>
-
   );
 }
 

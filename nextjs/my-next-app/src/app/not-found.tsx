@@ -1,5 +1,5 @@
-import Link from "next/link";
-import '../app/globals.css'
+import Link from 'next/link';
+import '../app/globals.css';
 
 function NotFoundPage() {
   return (

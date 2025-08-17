@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useContext } from 'react';
 import SearchComponent from '../Search/Search';
@@ -55,7 +55,11 @@ function Header({
           className="flex items-center justify-center md:text-lg lg:text-xl xl:text-2xl hover:text-pink-200 transition dark:text-stone-50 dark:hover:text-pink-100 cursor-pointer"
           onClick={changeTheme}
         >
-          {theme === 'dark' ? <>{translate('dark theme')}</> : <>{translate('light theme')}</>}
+          {theme === 'dark' ? (
+            <>{translate('dark theme')}</>
+          ) : (
+            <>{translate('light theme')}</>
+          )}
         </button>
         <LanguageSwitcher />
         <SearchComponent

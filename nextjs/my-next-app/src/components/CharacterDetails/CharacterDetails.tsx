@@ -4,7 +4,6 @@ import Spinner from '@/components/Spinner/Spinner';
 import { charactersApi } from '@/services/service';
 import { isApiError } from '@/utils/utils';
 import Image from 'next/image';
-import { useParams, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
 function CharacterDetails({ id }: { id: string }) {

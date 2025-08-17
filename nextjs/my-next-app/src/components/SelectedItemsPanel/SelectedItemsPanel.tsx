@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store/store';
@@ -25,7 +25,7 @@ function SelectedItemsPanel() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ selectedCharacters }),
-      })
+      });
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);

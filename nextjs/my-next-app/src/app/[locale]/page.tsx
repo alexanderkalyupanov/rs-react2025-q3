@@ -12,12 +12,8 @@ import SelectedItemsPanel from '@/components/SelectedItemsPanel/SelectedItemsPan
 function App() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // const [lastSearch, setLastSearch] = useState(
-  //   () => localStorage.getItem('lastSearch') || ''
-  // );
   const [lastSearch, setLastSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
 
   const { data, isLoading } = charactersApi.useGetCharactersQuery({
     query: lastSearch,

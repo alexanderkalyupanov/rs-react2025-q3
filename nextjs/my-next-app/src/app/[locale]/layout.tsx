@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import '../globals.css';
 import { ReduxProvider } from '@/components/reduxProvider/reduxProvider';
+import { ThemeProvider } from 'next-themes';
 
 export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'ru' }];
@@ -10,31 +11,31 @@ export async function generateStaticParams() {
 export default async function LocaleLayout({
   children,
   params,
-  modal
 }: {
   children: React.ReactNode;
   params: { locale: string };
-  modal: React.ReactNode
+  modal: React.ReactNode;
 }) {
   const { locale } = params;
 
   let messages;
   try {
     messages = (await import(`../../messages/${locale}.json`)).default;
-  } catch (error) {
+  } catch {
     notFound();
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body>
-        <ReduxProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-            {modal}
-          </NextIntlClientProvider>
-        </ReduxProvider>
+        <ThemeProvider>
+          <ReduxProvider>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </ReduxProvider>
+        </ThemeProvider>
       </body>
-    </html >
+    </html>
   );
 }

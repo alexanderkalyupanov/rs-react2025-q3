@@ -1,8 +1,5 @@
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
-
-
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
