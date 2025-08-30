@@ -57,3 +57,4 @@ Interactions: Search
 ### Ranked Chart for searching
 <img width="1919" height="368" alt="Screenshot_1" src="https://github.com/user-attachments/assets/460138d0-fbd6-4ce8-a64a-adbcc087c1cf" />
 
+## Result: performance is at an acceptable level
