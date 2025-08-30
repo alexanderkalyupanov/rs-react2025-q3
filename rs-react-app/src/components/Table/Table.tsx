@@ -1,8 +1,10 @@
 
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { fetchData } from "../../services/fetchData";
 import Loading from "../Loading/Loading";
+import SearchInput from "../Search/Search";
+import Select from "../Select/Select";
 
 interface CountryData {
   year: number;
@@ -51,81 +53,106 @@ const Table = () => {
     loadData();
   }, [])
 
-  const tableData: TableRowData[] = dataList ? Object.entries(dataList).map(
-    ([country, countryInfo]) => {
-      const lastYear = countryInfo.data[countryInfo.data.length - 1]
-      return {
-        country,
-        iso_code: countryInfo.iso_code,
-        year: lastYear.year,
-        population: lastYear.population,
-        co2: lastYear.co2,
-        co2_per_capita: lastYear.co2_per_capita
+  const tableData: TableRowData[] = useMemo(() => {
+    if (!dataList) return [];
+    return Object.entries(dataList).map(
+      ([country, countryInfo]) => {
+        const lastYear = countryInfo.data[countryInfo.data.length - 1]
+        return {
+          country,
+          iso_code: countryInfo.iso_code,
+          year: lastYear.year,
+          population: lastYear.population,
+          co2: lastYear.co2,
+          co2_per_capita: lastYear.co2_per_capita
+        }
+      });
+  }, [dataList])
+
+  const filteredData = useMemo(() => {
+    return tableData.filter((item) => {
+      return item.country.toLowerCase().includes(searchTerm.toLowerCase());
+    })
+  }, [tableData, searchTerm])
+
+  const filteredCountry = useMemo(() => {
+    return [...filteredData].sort((a, b) => {
+      let aValue = a[sortField];
+      let bValue = b[sortField];
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+
+        if (aValue > bValue) {
+          return sortDirection === 'asc' ? 1 : -1;
+        }
+
+        if (aValue < bValue) {
+          return sortDirection === 'desc' ? -1 : 1;
+        }
       }
-    }) : []
 
-  const filteredData = [...tableData].filter((item) => {
-    return item.country.toLowerCase().includes(searchTerm.toLowerCase());
-  })
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
 
-  const filteredCountry = [...filteredData].sort((a, b) => {
-    let aValue = a[sortField];
-    let bValue = b[sortField];
+        if (aValue > bValue) {
+          return sortDirection === 'asc' ? 1 : -1;
+        }
 
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      aValue = aValue.toLowerCase();
-      bValue = bValue.toLowerCase();
-
-      if (aValue > bValue) {
-        return sortDirection === 'asc' ? 1 : -1;
+        if (aValue < bValue) {
+          return sortDirection === 'desc' ? -1 : 1;
+        }
       }
+      return 0;
+    })
+  }, [filteredData, sortField, sortDirection]);
 
-      if (aValue < bValue) {
-        return sortDirection === 'asc' ? -1 : 1;
-      }
-    }
+  const handleSearchTermChange = useCallback((value: string) => {
+    setSearchTerm(value);
+  }, [])
 
-    if (typeof aValue === 'number' && typeof bValue === 'number') {
-
-      if (aValue > bValue) {
-        return sortDirection === 'asc' ? 1 : -1;
-      }
-
-      if (aValue < bValue) {
-        return sortDirection === 'asc' ? -1 : 1;
-      }
-    }
-    return 0;
-  })
-
-  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  }
-
-  const handleSortDirectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const direction = e.target.value;
+  const handleSortDirectionChange = useCallback((value: string) => {
+    const direction = value;
     if (direction === 'asc' || direction === 'desc') setSortDirection(direction);
-  }
+  }, [])
 
-  const handleSortFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const field = e.target.value;
+  const handleSortFieldChange = useCallback((value: string) => {
+    const field = value;
     if (field === 'country' || field === 'population') setSortField(field);
-  }
+  }, [])
+
+  const sortFieldOptions = [
+    { value: 'country', label: 'Country' },
+    { value: 'population', label: 'Population' }
+  ];
+
+  const sortDirectionOptions = [
+    { value: 'asc', label: 'ASC' },
+    { value: 'desc', label: 'DESC' }
+  ];
+
 
   return (
     <div>
       <Suspense fallback={<Loading />}>
         <div className="flex">
-          <input type="text" placeholder="Search country.." value={searchTerm} onChange={handleSearchTermChange} />
-          <h3>Sort by:</h3>
-          <select value={sortField} onChange={handleSortFieldChange}>
-            <option value="country">Country</option>
-            <option value="population">Population</option>
-          </select>
-          <select value={sortDirection} onChange={handleSortDirectionChange}>
-            <option value="asc">ASC</option>
-            <option value="desc">DESC</option>
-          </select>
+          <SearchInput
+            value={searchTerm}
+            onChange={handleSearchTermChange}
+          />
+
+          <Select
+            value={sortField}
+            onChange={handleSortFieldChange}
+            options={sortFieldOptions}
+            label="Sort by:"
+          />
+
+          <Select
+            value={sortDirection}
+            onChange={handleSortDirectionChange}
+            options={sortDirectionOptions}
+          />
         </div>
         <table>
           <thead className="bg-gray-50">
